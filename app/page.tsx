@@ -135,6 +135,42 @@ export default function Home() {
     }
   };
 
+  const handleUpdateEntry = async (id: string, quantity: number, serving: string) => {
+    try {
+      const entry = entries.find(e => e.id === id);
+      if (!entry) return;
+
+      const food = FOOD_DATABASE.find(f => f.name === entry.food);
+      if (!food) return;
+
+      const selectedServing = food.servings.find(s => s.label === serving);
+      if (!selectedServing) return;
+
+      const servingRatio = selectedServing.grams / 100;
+
+      const res = await fetch('/api/entries', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id,
+          quantity,
+          serving,
+          calories: Math.round(food.calories * servingRatio * quantity),
+          protein: Math.round(food.protein * servingRatio * quantity * 10) / 10,
+          carbs: Math.round(food.carbs * servingRatio * quantity * 10) / 10,
+          fat: Math.round(food.fat * servingRatio * quantity * 10) / 10,
+        }),
+      });
+
+      if (res.ok) {
+        const updatedEntry = await res.json();
+        setEntries(entries.map(e => e.id === id ? updatedEntry : e));
+      }
+    } catch (error) {
+      console.error('Failed to update entry:', error);
+    }
+  };
+
   const todayEntries = entries.filter(e => e.date === selectedDate);
   const totals = calculateDailyTotals(entries, selectedDate);
 
@@ -213,8 +249,10 @@ export default function Home() {
         <div className="mb-8">
           <EntriesTable
             entries={todayEntries}
+            foods={FOOD_DATABASE}
             onDelete={handleDelete}
             onEdit={startEdit}
+            onUpdateEntry={handleUpdateEntry}
             loading={loading}
             animatingId={animatingId}
           />
