@@ -59,6 +59,10 @@ export default function EntriesTable({
     }
   };
 
+  const handleBlur = (id: string) => {
+    handleSaveInline(id);
+  };
+
   const getServingsForFood = (foodName: string): Serving[] => {
     const food = foods.find(f => f.name === foodName);
     return food?.servings || [];
@@ -111,6 +115,7 @@ export default function EntriesTable({
                     min="1"
                     value={editingQuantity}
                     onChange={(e) => setEditingQuantity(e.target.value)}
+                    onBlur={() => handleBlur(entry.id)}
                     className="w-16 px-2 py-1 border-2 border-blue-200 rounded text-center font-semibold text-gray-900"
                     autoFocus
                   />
@@ -128,6 +133,7 @@ export default function EntriesTable({
                   <select
                     value={editingServing}
                     onChange={(e) => setEditingServing(e.target.value)}
+                    onBlur={() => handleBlur(entry.id)}
                     className="px-2 py-1 border-2 border-blue-200 rounded font-semibold text-gray-900"
                   >
                     {getServingsForFood(entry.food).map((serving) => (
@@ -147,35 +153,14 @@ export default function EntriesTable({
               </td>
               <td className="px-6 py-4 text-right font-bold text-gray-900">{entry.calories} kcal</td>
               <td className="px-6 py-4 text-right">
-                {editingId === entry.id ? (
-                  <div className="flex gap-2 justify-end">
-                    <button
-                      onClick={() => handleSaveInline(entry.id)}
-                      disabled={savingId === entry.id}
-                      className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded transition disabled:opacity-50"
-                      title="Save"
-                    >
-                      ✓
-                    </button>
-                    <button
-                      onClick={() => setEditingId(null)}
-                      className="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white text-sm font-semibold rounded transition"
-                      title="Cancel"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex gap-2 justify-end">
-                    <button
-                      onClick={() => onDelete(entry.id)}
-                      className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded transition"
-                      title="Delete"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                )}
+                <button
+                  onClick={() => onDelete(entry.id)}
+                  disabled={savingId === entry.id}
+                  className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded transition disabled:opacity-50"
+                  title="Delete"
+                >
+                  ✕
+                </button>
               </td>
             </tr>
           ))}
