@@ -27,6 +27,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [animatingId, setAnimatingId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [targets, setTargets] = useState<NutritionTargets | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editCalories, setEditCalories] = useState('');
@@ -153,12 +154,46 @@ export default function Home() {
             <p className="text-gray-600 text-lg mt-2">Track your macros like a boss 💪</p>
           </div>
           <div className="flex items-center gap-4">
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
-            />
+            <div className="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-lg px-4 py-3">
+              <button
+                onClick={() => {
+                  const date = new Date(selectedDate);
+                  date.setDate(date.getDate() - 1);
+                  setSelectedDate(date.toISOString().split('T')[0]);
+                }}
+                className="text-blue-600 hover:text-blue-700 font-bold text-xl"
+                title="Previous day"
+              >
+                ◄
+              </button>
+              <span className="text-lg font-semibold text-gray-800 min-w-[100px] text-center">
+                {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              </span>
+              <button
+                onClick={() => {
+                  const date = new Date(selectedDate);
+                  date.setDate(date.getDate() + 1);
+                  setSelectedDate(date.toISOString().split('T')[0]);
+                }}
+                className="text-blue-600 hover:text-blue-700 font-bold text-xl"
+                title="Next day"
+              >
+                ►
+              </button>
+              <button
+                onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                className="text-gray-600 hover:text-gray-700 font-bold text-lg ml-2"
+                title="Open calendar"
+              >
+                ▼
+              </button>
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="hidden"
+              />
+            </div>
             <button
               onClick={() => setIsFormOpen(true)}
               className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
@@ -261,6 +296,33 @@ export default function Home() {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Calendar Modal */}
+      {isCalendarOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-gray-800">Select Date</h2>
+              <button
+                onClick={() => setIsCalendarOpen(false)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ✕
+              </button>
+            </div>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => {
+                setSelectedDate(e.target.value);
+                setIsCalendarOpen(false);
+              }}
+              className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+              autoFocus
+            />
           </div>
         </div>
       )}
