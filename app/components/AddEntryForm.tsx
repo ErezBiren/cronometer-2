@@ -22,6 +22,7 @@ interface AddEntryFormProps {
   onSubmit: (data: {
     date: string;
     food: string;
+    serving: string;
     quantity: number;
     calories: number;
     protein: number;
@@ -70,16 +71,24 @@ export default function AddEntryForm({
 
     const qty = parseInt(quantity) || 1;
 
+    if (!selectedServing) {
+      alert('Please select a serving size');
+      return;
+    }
+
+    const servingRatio = selectedServing.grams / 100;
+
     setSubmitting(true);
     try {
       await onSubmit({
         date: selectedDate,
         food: selectedFood.name,
+        serving: selectedServing.label,
         quantity: qty,
-        calories: Math.round(selectedFood.calories * qty),
-        protein: Math.round(selectedFood.protein * qty * 10) / 10,
-        carbs: Math.round(selectedFood.carbs * qty * 10) / 10,
-        fat: Math.round(selectedFood.fat * qty * 10) / 10,
+        calories: Math.round(selectedFood.calories * servingRatio * qty),
+        protein: Math.round(selectedFood.protein * servingRatio * qty * 10) / 10,
+        carbs: Math.round(selectedFood.carbs * servingRatio * qty * 10) / 10,
+        fat: Math.round(selectedFood.fat * servingRatio * qty * 10) / 10,
       });
       setSelectedFood(null);
       setQuantity('1');
@@ -93,19 +102,17 @@ export default function AddEntryForm({
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 pointer-events-none">
       <div className="bg-white rounded-xl shadow-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto pointer-events-auto">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">➕ Add Entry</h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">➕ Add Entry</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+          >
+            ✕
+          </button>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">📅 Date</label>
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => onDateChange(e.target.value)}
-              className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
-            />
-          </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">🍎 Select Food</label>
             <input
@@ -145,72 +152,54 @@ export default function AddEntryForm({
           </div>
 
           {selectedFood && (
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">📏 Serving Size</label>
-              <select
-                value={selectedServing?.label || ''}
-                onChange={(e) => {
-                  const serving = selectedFood.servings.find(s => s.label === e.target.value);
-                  setSelectedServing(serving || null);
-                }}
-                className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
-              >
-                {selectedFood.servings.map((serving) => (
-                  <option key={serving.label} value={serving.label}>
-                    {serving.label} ({serving.grams}g)
-                  </option>
-                ))}
-              </select>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">📊 Quantity</label>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value || '1')}
+                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-center text-gray-900"
+                  disabled={submitting}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">📏 Serving Size</label>
+                <select
+                  value={selectedServing?.label || ''}
+                  onChange={(e) => {
+                    const serving = selectedFood.servings.find(s => s.label === e.target.value);
+                    setSelectedServing(serving || null);
+                  }}
+                  className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
+                >
+                  {selectedFood.servings.map((serving) => (
+                    <option key={serving.label} value={serving.label}>
+                      {serving.label} ({serving.grams}g)
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           )}
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">📊 Quantity</label>
-            <div className="flex gap-2 items-center">
-              <button
-                type="button"
-                onClick={() => setQuantity(Math.max(1, parseInt(quantity) - 1).toString())}
-                className="px-4 py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg transition"
-                disabled={submitting}
-              >
-                −
-              </button>
-              <input
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value || '1')}
-                className="flex-1 px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-bold text-center text-2xl text-gray-900"
-                disabled={submitting}
-              />
-              <button
-                type="button"
-                onClick={() => setQuantity((parseInt(quantity) + 1).toString())}
-                className="px-4 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition"
-                disabled={submitting}
-              >
-                +
-              </button>
+          {selectedFood && selectedServing && (
+            <div className="p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
+              <p className="text-sm font-semibold text-gray-700">
+                Protein: <span className="text-blue-600">{Math.round(selectedFood.protein * (selectedServing.grams / 100) * (parseInt(quantity) || 1) * 10) / 10}g</span>
+              </p>
             </div>
-          </div>
+          )}
 
-          <div className="flex gap-3 mt-6">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={submitting}
-              className="flex-1 px-4 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-lg transition disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={submitting || !selectedFood}
-              className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition disabled:opacity-50"
-            >
-              {submitting ? '⏳ Adding...' : '✨ Add Entry'}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={submitting || !selectedFood}
+            className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition disabled:opacity-50 mt-6"
+          >
+            {submitting ? '⏳ Adding...' : '✨ Add Entry'}
+          </button>
         </form>
       </div>
     </div>

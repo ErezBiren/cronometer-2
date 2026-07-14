@@ -38,8 +38,8 @@ export default function EntriesTable({
         <thead className="bg-gray-100 border-b-2 border-gray-200">
           <tr>
             <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Food</th>
-            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Quantity</th>
-            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Unit</th>
+            <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Quantity</th>
+            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Serving Size</th>
             <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700">Calories</th>
             <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700">Actions</th>
           </tr>
@@ -56,10 +56,8 @@ export default function EntriesTable({
               <td className="px-6 py-4">
                 <p className="font-semibold text-gray-900">{entry.food}</p>
               </td>
-              <td className="px-6 py-4 text-gray-700">{entry.quantity}</td>
-              <td className="px-6 py-4 text-gray-700">
-                {entry.quantity === 1 ? 'serving' : 'servings'}
-              </td>
+              <td className="px-6 py-4 text-center text-gray-700">{entry.quantity}</td>
+              <td className="px-6 py-4 text-left text-gray-700">{entry.serving}</td>
               <td className="px-6 py-4 text-right font-bold text-gray-900">{entry.calories} kcal</td>
               <td className="px-6 py-4 text-right">
                 <div className="flex gap-2 justify-end">

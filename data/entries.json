@@ -1,22 +1,23 @@
 [
   {
     "date": "2026-07-14",
-    "food": "Salmon",
-    "quantity": 1,
-    "calories": 208,
-    "protein": 20,
-    "carbs": 0,
-    "fat": 13,
-    "id": "1784045177663"
-  },
-  {
-    "date": "2026-07-14",
     "food": "Chicken Breast",
     "quantity": 1,
     "calories": 165,
     "protein": 31,
     "carbs": 0,
     "fat": 3.6,
-    "id": "1784045237124"
+    "id": "1784050680744"
+  },
+  {
+    "date": "2026-07-14",
+    "food": "Chicken Breast",
+    "serving": "100g",
+    "quantity": 1,
+    "calories": 165,
+    "protein": 31,
+    "carbs": 0,
+    "fat": 3.6,
+    "id": "1784050989264"
   }
 ]
