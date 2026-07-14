@@ -1,9 +1,15 @@
 import { useState } from 'react';
 
+interface Serving {
+  label: string;
+  grams: number;
+}
+
 interface Food {
   id: string;
   name: string;
-  serving: string;
+  servings: Serving[];
+  image: string;
   calories: number;
   protein: number;
   carbs: number;
@@ -38,6 +44,7 @@ export default function AddEntryForm({
   isLoading = false,
 }: AddEntryFormProps) {
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
+  const [selectedServing, setSelectedServing] = useState<Serving | null>(null);
   const [quantity, setQuantity] = useState('1');
   const [submitting, setSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -50,6 +57,7 @@ export default function AddEntryForm({
 
   const handleSelectFood = (food: Food) => {
     setSelectedFood(food);
+    setSelectedServing(food.servings[0] || null);
     setSearchTerm('');
   };
 
@@ -108,51 +116,53 @@ export default function AddEntryForm({
               className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900 mb-3"
             />
 
-            {selectedFood && (
-              <div className="mb-3 p-3 bg-blue-50 border-2 border-blue-200 rounded-lg">
-                <p className="font-semibold text-gray-800">
-                  Selected: {selectedFood.name}
-                </p>
-                <p className="text-sm text-gray-600">{selectedFood.serving} - {selectedFood.calories} cal</p>
-              </div>
-            )}
-
             <div className="border-2 border-blue-200 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
               <table className="w-full">
                 <thead className="bg-gray-100 sticky top-0">
                   <tr>
+                    <th className="px-4 py-2 text-center text-sm font-semibold text-gray-700">Image</th>
                     <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Food</th>
-                    <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Serving</th>
-                    <th className="px-4 py-2 text-right text-sm font-semibold text-gray-700">Cal</th>
-                    <th className="px-4 py-2 text-center text-sm font-semibold text-gray-700">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {filteredFoods.map((food) => (
                     <tr
                       key={food.id}
+                      onClick={() => handleSelectFood(food)}
                       className={`hover:bg-blue-50 cursor-pointer transition ${
                         selectedFood?.id === food.id ? 'bg-blue-100' : ''
                       }`}
                     >
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">{food.name}</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">{food.serving}</td>
-                      <td className="px-4 py-3 text-sm text-right font-semibold text-gray-600">{food.calories}</td>
                       <td className="px-4 py-3 text-center">
-                        <button
-                          type="button"
-                          onClick={() => handleSelectFood(food)}
-                          className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded transition"
-                        >
-                          {selectedFood?.id === food.id ? '✓ Selected' : 'Select'}
-                        </button>
+                        <img src={food.image} alt={food.name} className="w-12 h-12 object-cover rounded" />
                       </td>
+                      <td className="px-4 py-3 text-sm font-medium text-gray-900">{food.name}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
+
+          {selectedFood && (
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">📏 Serving Size</label>
+              <select
+                value={selectedServing?.label || ''}
+                onChange={(e) => {
+                  const serving = selectedFood.servings.find(s => s.label === e.target.value);
+                  setSelectedServing(serving || null);
+                }}
+                className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
+              >
+                {selectedFood.servings.map((serving) => (
+                  <option key={serving.label} value={serving.label}>
+                    {serving.label} ({serving.grams}g)
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">📊 Quantity</label>

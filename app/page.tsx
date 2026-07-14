@@ -9,10 +9,16 @@ import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDI
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
 import foodsData from '@/data/foods.json';
 
+interface Serving {
+  label: string;
+  grams: number;
+}
+
 interface Food {
   id: string;
   name: string;
-  serving: string;
+  servings: Serving[];
+  image: string;
   calories: number;
   protein: number;
   carbs: number;
