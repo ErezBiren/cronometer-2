@@ -1,0 +1,17 @@
+[
+  { "id": "1", "name": "Chicken Breast", "serving": "100g", "calories": 165, "protein": 31, "carbs": 0, "fat": 3.6 },
+  { "id": "2", "name": "Salmon", "serving": "100g", "calories": 208, "protein": 20, "carbs": 0, "fat": 13 },
+  { "id": "3", "name": "Egg", "serving": "1 large", "calories": 78, "protein": 6, "carbs": 0.6, "fat": 5.3 },
+  { "id": "4", "name": "Banana", "serving": "1 medium", "calories": 89, "protein": 1, "carbs": 23, "fat": 0.3 },
+  { "id": "5", "name": "Apple", "serving": "1 medium", "calories": 95, "protein": 0.5, "carbs": 25, "fat": 0.3 },
+  { "id": "6", "name": "Oats", "serving": "1/2 cup dry", "calories": 150, "protein": 5, "carbs": 27, "fat": 3 },
+  { "id": "7", "name": "Rice", "serving": "1 cup cooked", "calories": 206, "protein": 4, "carbs": 45, "fat": 0.2 },
+  { "id": "8", "name": "Broccoli", "serving": "1 cup", "calories": 55, "protein": 4, "carbs": 11, "fat": 0.6 },
+  { "id": "9", "name": "Sweet Potato", "serving": "1 medium", "calories": 103, "protein": 2, "carbs": 23, "fat": 0.1 },
+  { "id": "10", "name": "Almonds", "serving": "23 nuts", "calories": 160, "protein": 6, "carbs": 6, "fat": 14 },
+  { "id": "11", "name": "Greek Yogurt", "serving": "100g", "calories": 59, "protein": 10, "carbs": 3, "fat": 0.4 },
+  { "id": "12", "name": "Peanut Butter", "serving": "1 tbsp", "calories": 96, "protein": 4, "carbs": 3, "fat": 8 },
+  { "id": "13", "name": "Beef (lean)", "serving": "100g", "calories": 180, "protein": 26, "carbs": 0, "fat": 8 },
+  { "id": "14", "name": "Bread", "serving": "1 slice", "calories": 79, "protein": 2.7, "carbs": 14, "fat": 1 },
+  { "id": "15", "name": "Milk", "serving": "1 cup", "calories": 149, "protein": 8, "carbs": 12, "fat": 8 }
+]

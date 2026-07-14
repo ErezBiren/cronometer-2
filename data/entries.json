@@ -8,5 +8,15 @@
     "carbs": 0,
     "fat": 13,
     "id": "1784045177663"
+  },
+  {
+    "date": "2026-07-14",
+    "food": "Chicken Breast",
+    "quantity": 1,
+    "calories": 165,
+    "protein": 31,
+    "carbs": 0,
+    "fat": 3.6,
+    "id": "1784045237124"
   }
 ]
