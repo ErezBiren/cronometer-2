@@ -8,7 +8,7 @@ import NutrientTargets from '@/app/components/NutrientTargets';
 import AddEntryForm from '@/app/components/AddEntryForm';
 import AddFoodModal from '@/app/components/AddFoodModal';
 import ManageFoodsModal from '@/app/components/ManageFoodsModal';
-import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE } from '@/app/lib/calculations';
+import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
 import foodsData from '@/data/foods.json';
 
@@ -40,7 +40,7 @@ export default function Home() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isAddFoodOpen, setIsAddFoodOpen] = useState(false);
   const [isManageFoodsOpen, setIsManageFoodsOpen] = useState(false);
-  const [targets, setTargets] = useState<NutritionTargets | null>(null);
+  const [targets, setTargets] = useState<NutritionTargets>(DEFAULT_TARGETS);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editCalories, setEditCalories] = useState('');
   const [editProtein, setEditProtein] = useState('');
@@ -213,8 +213,6 @@ export default function Home() {
   const todayEntries = entries.filter(e => e.date === selectedDate);
   const totals = calculateDailyTotals(entries, selectedDate);
 
-  if (!targets) return null;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-8">
       <style>{`
@@ -337,6 +335,36 @@ export default function Home() {
               { name: 'Vit. B12', value: 0, target: 2.4 },
               { name: 'Folate', value: 0, target: 400 },
               { name: 'Potassium', value: 0, target: 3500 },
+            ]}
+            general={[
+              { name: 'Energy', value: totals.calories, unit: 'kcal', target: 2500 },
+              { name: 'Oxalate', value: 0, unit: 'mg', showDots: true },
+              { name: 'Phytate', value: 0, unit: 'mg', showDots: true },
+              { name: 'Water', value: 0, unit: 'g', target: 3500 },
+            ]}
+            carbohydrates={[
+              { name: 'Carbs', value: totals.carbs, unit: 'g', target: 300 },
+              { name: 'Net Carbs', value: totals.carbs, unit: 'g', target: 300, indent: 1 },
+              { name: 'Fiber', value: 0, unit: 'g', target: 25 },
+              { name: 'Insoluble Fiber', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Soluble Fiber', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Starch', value: 0, unit: 'g', showDots: true },
+              { name: 'Sugars', value: totals.carbs, unit: 'g', showDots: true },
+              { name: 'Added Sugars', value: 0, unit: 'g', target: 25 },
+            ]}
+            protein={[
+              { name: 'Protein', value: totals.protein, unit: 'g', target: 180 },
+              { name: 'Cystine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Histidine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Isoleucine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Leucine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Lysine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Methionine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Phenylalanine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Threonine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Tryptophan', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Tyrosine', value: 0, unit: 'g', showDots: true, indent: 1 },
+              { name: 'Valine', value: 0, unit: 'g', showDots: true, indent: 1 },
             ]}
           />
         </div>

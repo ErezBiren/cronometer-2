@@ -21,10 +21,20 @@ interface CarbItem {
   showDots?: boolean;
 }
 
+interface ProteinItem {
+  name: string;
+  value: number;
+  unit: string;
+  target?: number;
+  indent?: number;
+  showDots?: boolean;
+}
+
 interface NutrientTargetsProps {
   nutrients: NutrientProgress[];
   general?: GeneralItem[];
   carbohydrates?: CarbItem[];
+  protein?: ProteinItem[];
 }
 
 function renderProgressBar(value: number, target: number | undefined, percent: number) {
@@ -58,7 +68,7 @@ function renderDotIndicator(value: number, maxDots: number = 14) {
   );
 }
 
-export default function NutrientTargets({ nutrients, general = [], carbohydrates = [] }: NutrientTargetsProps) {
+export default function NutrientTargets({ nutrients, general = [], carbohydrates = [], protein = [] }: NutrientTargetsProps) {
   return (
     <div className="space-y-6">
       {/* Highlighted Nutrients */}
@@ -117,64 +127,115 @@ export default function NutrientTargets({ nutrients, general = [], carbohydrates
       </div>
 
       {/* General Section */}
-      {general.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">General</h3>
-          <div className="space-y-4">
-            {general.map((item) => {
-              const percent = item.target ? Math.round((item.value / item.target) * 100) : 0;
-              return (
-                <div key={item.name} className="flex items-center gap-4 pb-4 border-b border-gray-200 last:border-b-0">
-                  <span className="text-sm font-semibold text-gray-700 min-w-[100px]">{item.name}</span>
-                  <span className="text-sm font-semibold text-blue-600 min-w-[80px]">
-                    {item.value.toFixed(1)} {item.unit}
-                  </span>
-                  {item.showDots ? (
-                    renderDotIndicator(percent)
-                  ) : item.target ? (
-                    renderProgressBar(item.value, item.target, percent)
-                  ) : (
-                    <span className="text-sm font-semibold text-gray-600">N/T</span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      <div className="bg-white rounded-xl shadow-lg p-6">
+        <h3 className="text-lg font-bold text-gray-800 mb-4">General</h3>
+        {general.length === 0 ? (
+          <p className="text-sm text-gray-500">No data available</p>
+        ) : (
+          <table className="w-full">
+            <tbody>
+              {general.map((item) => {
+                const percent = item.target ? Math.round((item.value / item.target) * 100) : 0;
+                return (
+                  <tr key={item.name} className="border-b border-gray-200 last:border-b-0">
+                    <td className="text-sm font-semibold text-gray-700 py-4 pr-4">{item.name}</td>
+                    <td className="text-sm font-semibold text-blue-600 py-4 pr-4 min-w-[100px]">
+                      {item.value.toFixed(1)} {item.unit}
+                    </td>
+                    <td className="py-4">
+                      {item.showDots ? (
+                        renderDotIndicator(percent)
+                      ) : item.target ? (
+                        renderProgressBar(item.value, item.target, percent)
+                      ) : (
+                        <span className="text-sm font-semibold text-gray-600">N/T</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
 
       {/* Carbohydrates Section */}
-      {carbohydrates.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Carbohydrates</h3>
-          <div className="space-y-4">
-            {carbohydrates.map((item, idx) => {
-              const percent = item.target ? Math.round((item.value / item.target) * 100) : 0;
-              const indent = item.indent || 0;
-              return (
-                <div key={idx} className="flex items-center gap-4 pb-4 border-b border-gray-200 last:border-b-0">
-                  <span
-                    className="text-sm font-semibold text-gray-700 min-w-[120px]"
-                    style={{ paddingLeft: `${indent * 20}px` }}
-                  >
-                    {item.name}
-                  </span>
-                  <span className="text-sm font-semibold text-blue-600 min-w-[60px]">
-                    {item.value.toFixed(1)} {item.unit}
-                  </span>
-                  {item.showDots ? (
-                    renderDotIndicator(percent)
-                  ) : item.target ? (
-                    renderProgressBar(item.value, item.target, percent)
-                  ) : (
-                    <span className="text-sm font-semibold text-gray-600">N/T</span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      <div className="bg-white rounded-xl shadow-lg p-6">
+        <h3 className="text-lg font-bold text-gray-800 mb-4">Carbohydrates</h3>
+        {carbohydrates.length === 0 ? (
+          <p className="text-sm text-gray-500">No data available</p>
+        ) : (
+          <table className="w-full">
+            <tbody>
+              {carbohydrates.map((item, idx) => {
+                const percent = item.target ? Math.round((item.value / item.target) * 100) : 0;
+                const indent = item.indent || 0;
+                return (
+                  <tr key={idx} className="border-b border-gray-200 last:border-b-0">
+                    <td
+                      className="text-sm font-semibold text-gray-700 py-4 pr-4"
+                      style={{ paddingLeft: `${16 + indent * 20}px` }}
+                    >
+                      {item.name}
+                    </td>
+                    <td className="text-sm font-semibold text-blue-600 py-4 pr-4 min-w-[100px]">
+                      {item.value.toFixed(1)} {item.unit}
+                    </td>
+                    <td className="py-4">
+                      {item.showDots ? (
+                        renderDotIndicator(percent)
+                      ) : item.target ? (
+                        renderProgressBar(item.value, item.target, percent)
+                      ) : (
+                        <span className="text-sm font-semibold text-gray-600">N/T</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {/* Protein Section */}
+      <div className="bg-white rounded-xl shadow-lg p-6">
+        <h3 className="text-lg font-bold text-gray-800 mb-4">Protein</h3>
+        {protein.length === 0 ? (
+          <p className="text-sm text-gray-500">No data available</p>
+        ) : (
+          <table className="w-full">
+            <tbody>
+              {protein.map((item, idx) => {
+                const percent = item.target ? Math.round((item.value / item.target) * 100) : 0;
+                const indent = item.indent || 0;
+                return (
+                  <tr key={idx} className="border-b border-gray-200 last:border-b-0">
+                    <td
+                      className="text-sm font-semibold text-gray-700 py-4 pr-4"
+                      style={{ paddingLeft: `${16 + indent * 20}px` }}
+                    >
+                      {item.name}
+                    </td>
+                    <td className="text-sm font-semibold text-blue-600 py-4 pr-4 min-w-[100px]">
+                      {item.value.toFixed(1)} {item.unit}
+                    </td>
+                    <td className="py-4">
+                      {item.showDots ? (
+                        renderDotIndicator(percent)
+                      ) : item.target ? (
+                        renderProgressBar(item.value, item.target, percent)
+                      ) : (
+                        <span className="text-sm font-semibold text-gray-600">N/T</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
