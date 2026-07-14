@@ -30,8 +30,26 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
   const [protein, setProtein] = useState('');
   const [carbs, setCarbs] = useState('');
   const [fat, setFat] = useState('');
-  const [grams, setGrams] = useState('100');
+  const [servings, setServings] = useState<Serving[]>([{ label: '100g', grams: 100 }]);
   const [submitting, setSubmitting] = useState(false);
+
+  const addServing = () => {
+    setServings([...servings, { label: '', grams: 0 }]);
+  };
+
+  const removeServing = (index: number) => {
+    setServings(servings.filter((_, i) => i !== index));
+  };
+
+  const updateServing = (index: number, field: 'label' | 'grams', value: string) => {
+    const updated = [...servings];
+    if (field === 'grams') {
+      updated[index].grams = parseInt(value) || 0;
+    } else {
+      updated[index].label = value;
+    }
+    setServings(updated);
+  };
 
   if (!isOpen) return null;
 
@@ -42,12 +60,17 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
       return;
     }
 
+    if (servings.length === 0 || servings.some(s => !s.label.trim() || s.grams <= 0)) {
+      alert('Please add at least one serving with label and grams');
+      return;
+    }
+
     setSubmitting(true);
     try {
       const newFood: Food = {
         id: Date.now().toString(),
         name: name.trim(),
-        servings: [{ label: `${grams}g`, grams: parseInt(grams) || 100 }],
+        servings: servings,
         image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop',
         calories: parseInt(calories) || 0,
         protein: parseFloat(protein) || 0,
@@ -55,13 +78,13 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
         fat: parseFloat(fat) || 0,
       };
 
-      onAdd(newFood);
+      await onAdd(newFood);
       setName('');
       setCalories('');
       setProtein('');
       setCarbs('');
       setFat('');
-      setGrams('100');
+      setServings([{ label: '100g', grams: 100 }]);
       onClose();
     } finally {
       setSubmitting(false);
@@ -95,15 +118,48 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Serving Size (g)</label>
-            <input
-              type="number"
-              value={grams}
-              onChange={(e) => setGrams(e.target.value)}
-              min="1"
-              className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
+            <label className="block text-sm font-semibold text-gray-700 mb-2">📏 Serving Sizes</label>
+            <div className="space-y-2 mb-2">
+              {servings.map((serving, index) => (
+                <div key={index} className="flex gap-2">
+                  <input
+                    type="text"
+                    value={serving.label}
+                    onChange={(e) => updateServing(index, 'label', e.target.value)}
+                    placeholder="e.g., 100g, 1 cup"
+                    className="flex-1 px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                    disabled={submitting}
+                  />
+                  <input
+                    type="number"
+                    value={serving.grams}
+                    onChange={(e) => updateServing(index, 'grams', e.target.value)}
+                    placeholder="grams"
+                    min="1"
+                    className="w-24 px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                    disabled={submitting}
+                  />
+                  {servings.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeServing(index)}
+                      className="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition"
+                      disabled={submitting}
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={addServing}
+              className="w-full px-3 py-2 bg-blue-200 hover:bg-blue-300 text-blue-800 font-semibold rounded-lg transition"
               disabled={submitting}
-            />
+            >
+              + Add Serving Size
+            </button>
           </div>
 
           <div className="grid grid-cols-2 gap-3">

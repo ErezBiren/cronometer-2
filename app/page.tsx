@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import EntriesTable from '@/app/components/EntriesTable';
 import EnergyCircles from '@/app/components/EnergyCircles';
 import TargetsPanel from '@/app/components/TargetsPanel';
+import NutrientTargets from '@/app/components/NutrientTargets';
 import AddEntryForm from '@/app/components/AddEntryForm';
 import AddFoodModal from '@/app/components/AddFoodModal';
 import ManageFoodsModal from '@/app/components/ManageFoodsModal';
@@ -322,6 +323,22 @@ export default function Home() {
               expenditure={DAILY_EXPENDITURE}
             />
           </div>
+        </div>
+
+        {/* Nutrient Targets */}
+        <div className="mt-8">
+          <NutrientTargets
+            nutrients={[
+              { name: 'Fiber', value: 0, target: 25 },
+              { name: 'Iron', value: 0, target: 18 },
+              { name: 'Calcium', value: 0, target: 1000 },
+              { name: 'Vit. A', value: 0, target: 900 },
+              { name: 'Vit. C', value: 0, target: 90 },
+              { name: 'Vit. B12', value: 0, target: 2.4 },
+              { name: 'Folate', value: 0, target: 400 },
+              { name: 'Potassium', value: 0, target: 3500 },
+            ]}
+          />
         </div>
       </div>
 
