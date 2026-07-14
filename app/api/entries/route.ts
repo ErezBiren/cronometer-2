@@ -7,7 +7,8 @@ const DATA_FILE = path.join(process.cwd(), 'data', 'entries.json');
 interface NutritionEntry {
   id: string;
   date: string;
-  meal: string;
+  food: string;
+  quantity: number;
   calories: number;
   protein: number;
   carbs: number;
@@ -63,5 +64,27 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete entry' }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    await ensureDataFile();
+    const { id, calories, protein, carbs, fat } = await request.json();
+    const data = await fs.readFile(DATA_FILE, 'utf-8');
+    const entries = JSON.parse(data) as NutritionEntry[];
+
+    const updated = entries.map(e =>
+      e.id === id
+        ? { ...e, calories, protein, carbs, fat }
+        : e
+    );
+
+    await fs.writeFile(DATA_FILE, JSON.stringify(updated, null, 2));
+    const updatedEntry = updated.find(e => e.id === id);
+
+    return NextResponse.json(updatedEntry);
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update entry' }, { status: 500 });
   }
 }

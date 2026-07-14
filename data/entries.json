@@ -1,20 +1,22 @@
 [
   {
     "date": "2026-07-14",
-    "meal": "Breakfast",
-    "calories": 450,
-    "protein": 25,
-    "carbs": 55,
-    "fat": 12,
-    "id": "1784041118641"
+    "food": "Rice",
+    "quantity": 1,
+    "calories": 206,
+    "protein": 4,
+    "carbs": 45,
+    "fat": 0.2,
+    "id": "1784042195149"
   },
   {
     "date": "2026-07-14",
-    "meal": "Lunch",
-    "calories": 650,
-    "protein": 35,
-    "carbs": 75,
-    "fat": 18,
-    "id": "1784041183386"
+    "food": "Apple",
+    "quantity": 1,
+    "calories": 95,
+    "protein": 0.5,
+    "carbs": 25,
+    "fat": 0.3,
+    "id": "1784044902059"
   }
 ]
