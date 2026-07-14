@@ -5,6 +5,8 @@ import EntriesTable from '@/app/components/EntriesTable';
 import EnergyCircles from '@/app/components/EnergyCircles';
 import TargetsPanel from '@/app/components/TargetsPanel';
 import AddEntryForm from '@/app/components/AddEntryForm';
+import AddFoodModal from '@/app/components/AddFoodModal';
+import ManageFoodsModal from '@/app/components/ManageFoodsModal';
 import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE } from '@/app/lib/calculations';
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
 import foodsData from '@/data/foods.json';
@@ -29,11 +31,14 @@ const FOOD_DATABASE: Food[] = foodsData;
 
 export default function Home() {
   const [entries, setEntries] = useState<NutritionEntry[]>([]);
+  const [foods, setFoods] = useState<Food[]>(FOOD_DATABASE);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [loading, setLoading] = useState(true);
   const [animatingId, setAnimatingId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isAddFoodOpen, setIsAddFoodOpen] = useState(false);
+  const [isManageFoodsOpen, setIsManageFoodsOpen] = useState(false);
   const [targets, setTargets] = useState<NutritionTargets | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editCalories, setEditCalories] = useState('');
@@ -140,7 +145,7 @@ export default function Home() {
       const entry = entries.find(e => e.id === id);
       if (!entry) return;
 
-      const food = FOOD_DATABASE.find(f => f.name === entry.food);
+      const food = foods.find(f => f.name === entry.food);
       if (!food) return;
 
       const selectedServing = food.servings.find(s => s.label === serving);
@@ -168,6 +173,39 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Failed to update entry:', error);
+    }
+  };
+
+  const handleAddFood = async (newFood: Food) => {
+    try {
+      const res = await fetch('/api/foods', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newFood),
+      });
+
+      if (res.ok) {
+        const savedFood = await res.json();
+        setFoods([...foods, savedFood]);
+      }
+    } catch (error) {
+      console.error('Failed to add food:', error);
+    }
+  };
+
+  const handleDeleteFood = async (id: string) => {
+    try {
+      const res = await fetch('/api/foods', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+
+      if (res.ok) {
+        setFoods(foods.filter(f => f.id !== id));
+      }
+    } catch (error) {
+      console.error('Failed to delete food:', error);
     }
   };
 
@@ -236,12 +274,26 @@ export default function Home() {
                 className="hidden"
               />
             </div>
-            <button
-              onClick={() => setIsFormOpen(true)}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
-            >
-              ➕ Add Entry
-            </button>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setIsManageFoodsOpen(true)}
+                className="px-4 py-3 bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95"
+              >
+                ⚙️
+              </button>
+              <button
+                onClick={() => setIsAddFoodOpen(true)}
+                className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              >
+                🍎 Add Food
+              </button>
+              <button
+                onClick={() => setIsFormOpen(true)}
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              >
+                ➕ Add Entry
+              </button>
+            </div>
           </div>
         </div>
 
@@ -280,7 +332,22 @@ export default function Home() {
         onSubmit={handleAddEntry}
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
-        foods={FOOD_DATABASE}
+        foods={foods}
+      />
+
+      {/* Add Food Modal */}
+      <AddFoodModal
+        isOpen={isAddFoodOpen}
+        onClose={() => setIsAddFoodOpen(false)}
+        onAdd={handleAddFood}
+      />
+
+      {/* Manage Foods Modal */}
+      <ManageFoodsModal
+        isOpen={isManageFoodsOpen}
+        onClose={() => setIsManageFoodsOpen(false)}
+        foods={foods}
+        onDelete={handleDeleteFood}
       />
 
       {/* Edit Modal - kept for backward compatibility */}
