@@ -60,7 +60,7 @@ export default function EntriesTable({
               <td className="px-6 py-4 text-gray-700">
                 {entry.quantity === 1 ? 'serving' : 'servings'}
               </td>
-              <td className="px-6 py-4 text-right font-bold text-orange-600">{entry.calories} kcal</td>
+              <td className="px-6 py-4 text-right font-bold text-gray-900">{entry.calories} kcal</td>
               <td className="px-6 py-4 text-right">
                 <div className="flex gap-2 justify-end">
                   <button
