@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-07-14",
+    "meal": "Breakfast",
+    "calories": 450,
+    "protein": 25,
+    "carbs": 55,
+    "fat": 12,
+    "id": "1784041118641"
+  },
+  {
+    "date": "2026-07-14",
+    "meal": "Lunch",
+    "calories": 650,
+    "protein": 35,
+    "carbs": 75,
+    "fat": 18,
+    "id": "1784041183386"
+  }
+]
