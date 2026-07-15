@@ -216,14 +216,14 @@ export default function Home() {
       `}</style>
 
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div>
             <h1 className="text-5xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
               📊 Nutrition Dashboard
             </h1>
             <p className="text-gray-600 text-lg mt-2">Track your macros like a boss 💪</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 w-full md:w-auto mt-4 md:mt-0">
             <div className="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-lg px-4 py-3">
               <button
                 onClick={() => {
@@ -284,6 +284,50 @@ export default function Home() {
                 ➕ Add Entry
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile Date Control - Below Header */}
+        <div className="md:hidden mb-4">
+          <div className="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-lg px-4 py-3">
+            <button
+              onClick={() => {
+                const date = new Date(selectedDate);
+                date.setDate(date.getDate() - 1);
+                setSelectedDate(date.toISOString().split('T')[0]);
+              }}
+              className="text-blue-600 hover:text-blue-700 font-bold text-xl"
+              title="Previous day"
+            >
+              ◄
+            </button>
+            <span className="text-lg font-semibold text-gray-800 min-w-[100px] text-center flex-1">
+              {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            </span>
+            <button
+              onClick={() => {
+                const date = new Date(selectedDate);
+                date.setDate(date.getDate() + 1);
+                setSelectedDate(date.toISOString().split('T')[0]);
+              }}
+              className="text-blue-600 hover:text-blue-700 font-bold text-xl"
+              title="Next day"
+            >
+              ►
+            </button>
+            <button
+              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+              className="text-gray-600 hover:text-gray-700 font-bold text-lg ml-2"
+              title="Open calendar"
+            >
+              ▼
+            </button>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="hidden"
+            />
           </div>
         </div>
 
