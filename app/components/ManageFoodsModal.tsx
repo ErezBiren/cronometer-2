@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 interface Serving {
   label: string;
   grams: number;
@@ -24,6 +26,7 @@ interface ManageFoodsModalProps {
 }
 
 export default function ManageFoodsModal({ isOpen, onClose, foods, onDelete }: ManageFoodsModalProps) {
+  const router = useRouter();
   if (!isOpen) return null;
 
   return (
@@ -63,13 +66,22 @@ export default function ManageFoodsModal({ isOpen, onClose, foods, onDelete }: M
                     </p>
                   </div>
                 </div>
-                <button
-                  onClick={() => onDelete(food.id)}
-                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded transition"
-                  title="Delete"
-                >
-                  ✕ Delete
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => router.push(`/foods/edit/${food.id}`)}
+                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold rounded transition"
+                    title="Edit"
+                  >
+                    ✏️ Edit
+                  </button>
+                  <button
+                    onClick={() => onDelete(food.id)}
+                    className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded transition"
+                    title="Delete"
+                  >
+                    ✕ Delete
+                  </button>
+                </div>
               </div>
             ))}
           </div>

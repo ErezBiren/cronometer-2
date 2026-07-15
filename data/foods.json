@@ -32,20 +32,5 @@
     "protein": 9,
     "carbs": 0,
     "fat": 0
-  },
-  {
-    "id": "1784093586973",
-    "name": "Apple",
-    "servings": [
-      {
-        "label": "100g",
-        "grams": 100
-      }
-    ],
-    "image": "/images/apple.jpg",
-    "calories": 52,
-    "protein": 0.3,
-    "carbs": 14,
-    "fat": 0.2
   }
 ]
