@@ -28,14 +28,14 @@ function ProgressBar({
   const isOver = current > target;
 
   return (
-    <div className="mb-6">
-      <div className="flex justify-between items-center mb-2">
-        <p className="font-semibold text-gray-800">{label}</p>
-        <p className="text-sm font-bold text-gray-600">
+    <div className="mb-0">
+      <div className="flex justify-between items-center mb-0">
+        <p className="font-semibold text-gray-800 text-sm">{label}</p>
+        <p className="text-xs font-bold text-gray-600">
           {Math.round(percentage)}%
         </p>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+      <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
         <div
           className={`h-full rounded-full transition-all duration-300`}
           style={{
@@ -44,7 +44,7 @@ function ProgressBar({
           }}
         />
       </div>
-      <div className="flex justify-between mt-1">
+      <div className="flex justify-between mt-0">
         <p className="text-xs text-gray-500">
           {current.toFixed(1)} {unit}
         </p>
