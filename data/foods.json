@@ -12,7 +12,7 @@
         "grams": 85
       }
     ],
-    "image": "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=100&h=100&fit=crop",
+    "image": "/images/chicken-breast.jpg",
     "calories": 165,
     "protein": 31,
     "carbs": 0,
@@ -27,7 +27,7 @@
         "grams": 30
       }
     ],
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
+    "image": "/images/yellow-cheese-9.jpg",
     "calories": 0,
     "protein": 9,
     "carbs": 0,
@@ -42,7 +42,7 @@
         "grams": 100
       }
     ],
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
+    "image": "/images/apple.jpg",
     "calories": 52,
     "protein": 0.3,
     "carbs": 14,
