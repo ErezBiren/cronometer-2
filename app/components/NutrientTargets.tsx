@@ -72,7 +72,7 @@ export default function NutrientTargets({ nutrients, general = [], carbohydrates
   return (
     <div className="space-y-6">
       {/* Highlighted Nutrients */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-6 hidden md:block">
         <h3 className="text-lg font-bold text-gray-800 mb-6">🥗 Highlighted Nutrients</h3>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -127,7 +127,7 @@ export default function NutrientTargets({ nutrients, general = [], carbohydrates
       </div>
 
       {/* General Section */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-6 hidden md:block">
         <h3 className="text-lg font-bold text-gray-800 mb-4">General</h3>
         {general.length === 0 ? (
           <p className="text-sm text-gray-500">No data available</p>
@@ -160,7 +160,7 @@ export default function NutrientTargets({ nutrients, general = [], carbohydrates
       </div>
 
       {/* Carbohydrates Section */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-6 hidden md:block">
         <h3 className="text-lg font-bold text-gray-800 mb-4">Carbohydrates</h3>
         {carbohydrates.length === 0 ? (
           <p className="text-sm text-gray-500">No data available</p>
@@ -199,7 +199,7 @@ export default function NutrientTargets({ nutrients, general = [], carbohydrates
       </div>
 
       {/* Protein Section */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-6 hidden md:block">
         <h3 className="text-lg font-bold text-gray-800 mb-4">Protein</h3>
         {protein.length === 0 ? (
           <p className="text-sm text-gray-500">No data available</p>
