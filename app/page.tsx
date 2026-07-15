@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import EntriesTable from '@/app/components/EntriesTable';
 import EnergyCircles from '@/app/components/EnergyCircles';
 import TargetsPanel from '@/app/components/TargetsPanel';
 import NutrientTargets from '@/app/components/NutrientTargets';
 import AddEntryForm from '@/app/components/AddEntryForm';
 import ManageFoodsModal from '@/app/components/ManageFoodsModal';
+import BottomNavbar from '@/app/components/BottomNavbar';
 import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
 import foodsData from '@/data/foods.json';
@@ -32,6 +33,7 @@ const FOOD_DATABASE: Food[] = foodsData;
 
 export default function Home() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [entries, setEntries] = useState<NutritionEntry[]>([]);
   const [foods, setFoods] = useState<Food[]>(FOOD_DATABASE);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -50,7 +52,12 @@ export default function Home() {
   useEffect(() => {
     fetchEntries();
     setTargets(getStoredTargets());
-  }, []);
+
+    // Check if we should open the add entry form from query parameter
+    if (searchParams.get('openAddEntry') === 'true') {
+      setIsFormOpen(true);
+    }
+  }, [searchParams]);
 
   const fetchEntries = async () => {
     try {
@@ -198,7 +205,7 @@ export default function Home() {
   const totals = calculateDailyTotals(entries, selectedDate);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-8 md:pb-8 pb-28">
       <style>{`
         @keyframes popIn {
           0% { transform: scale(0.95); opacity: 0; }
@@ -459,6 +466,9 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Bottom Navigation for Mobile */}
+      <BottomNavbar />
     </div>
   );
 }
