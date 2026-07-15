@@ -19,13 +19,44 @@ interface Food {
   fat: number;
 }
 
+interface NutritionFacts {
+  calories: string;
+  totalFat: string;
+  saturatedFat: string;
+  transFat: string;
+  cholesterol: string;
+  sodium: string;
+  totalCarbs: string;
+  dietaryFiber: string;
+  totalSugars: string;
+  addedSugars: string;
+  protein: string;
+  vitaminD: string;
+  calcium: string;
+  iron: string;
+  potassium: string;
+}
+
 export default function AddFoodPage() {
   const router = useRouter();
   const [name, setName] = useState('');
-  const [calories, setCalories] = useState('');
-  const [protein, setProtein] = useState('');
-  const [carbs, setCarbs] = useState('');
-  const [fat, setFat] = useState('');
+  const [nutrition, setNutrition] = useState<NutritionFacts>({
+    calories: '',
+    totalFat: '',
+    saturatedFat: '',
+    transFat: '',
+    cholesterol: '',
+    sodium: '',
+    totalCarbs: '',
+    dietaryFiber: '',
+    totalSugars: '',
+    addedSugars: '',
+    protein: '',
+    vitaminD: '',
+    calcium: '',
+    iron: '',
+    potassium: '',
+  });
   const [servings, setServings] = useState<Serving[]>([{ label: '100g', grams: 100 }]);
   const [submitting, setSubmitting] = useState(false);
 
@@ -47,6 +78,10 @@ export default function AddFoodPage() {
     setServings(updated);
   };
 
+  const updateNutrition = (key: keyof NutritionFacts, value: string) => {
+    setNutrition(prev => ({ ...prev, [key]: value }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
@@ -66,10 +101,10 @@ export default function AddFoodPage() {
         name: name.trim(),
         servings: servings,
         image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop',
-        calories: parseInt(calories) || 0,
-        protein: parseFloat(protein) || 0,
-        carbs: parseFloat(carbs) || 0,
-        fat: parseFloat(fat) || 0,
+        calories: parseInt(nutrition.calories) || 0,
+        protein: parseFloat(nutrition.protein) || 0,
+        carbs: parseFloat(nutrition.totalCarbs) || 0,
+        fat: parseFloat(nutrition.totalFat) || 0,
       };
 
       const res = await fetch('/api/foods', {
@@ -160,60 +195,228 @@ export default function AddFoodPage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Calories</label>
-                <input
-                  type="number"
-                  value={calories}
-                  onChange={(e) => setCalories(e.target.value)}
-                  placeholder="0"
-                  min="0"
-                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
-                  disabled={submitting}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Protein (g)</label>
-                <input
-                  type="number"
-                  value={protein}
-                  onChange={(e) => setProtein(e.target.value)}
-                  placeholder="0"
-                  min="0"
-                  step="0.1"
-                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
-                  disabled={submitting}
-                />
-              </div>
-            </div>
+            <div className="mt-8 border-2 border-gray-300 rounded-lg p-6 bg-gray-50">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Nutrition Facts</h3>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Carbs (g)</label>
-                <input
-                  type="number"
-                  value={carbs}
-                  onChange={(e) => setCarbs(e.target.value)}
-                  placeholder="0"
-                  min="0"
-                  step="0.1"
-                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
-                  disabled={submitting}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Fat (g)</label>
-                <input
-                  type="number"
-                  value={fat}
-                  onChange={(e) => setFat(e.target.value)}
-                  placeholder="0"
-                  min="0"
-                  step="0.1"
-                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
-                  disabled={submitting}
-                />
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Calories</label>
+                    <input
+                      type="number"
+                      value={nutrition.calories}
+                      onChange={(e) => updateNutrition('calories', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Total Fat (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.totalFat}
+                      onChange={(e) => updateNutrition('totalFat', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 ml-4 text-sm">
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-1">Saturated Fat (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.saturatedFat}
+                      onChange={(e) => updateNutrition('saturatedFat', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-1">Trans Fat (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.transFat}
+                      onChange={(e) => updateNutrition('transFat', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Cholesterol (mg)</label>
+                    <input
+                      type="number"
+                      value={nutrition.cholesterol}
+                      onChange={(e) => updateNutrition('cholesterol', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Sodium (mg)</label>
+                    <input
+                      type="number"
+                      value={nutrition.sodium}
+                      onChange={(e) => updateNutrition('sodium', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Total Carbs (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.totalCarbs}
+                      onChange={(e) => updateNutrition('totalCarbs', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 ml-4 text-sm">
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-1">Dietary Fiber (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.dietaryFiber}
+                      onChange={(e) => updateNutrition('dietaryFiber', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-1">Total Sugars (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.totalSugars}
+                      onChange={(e) => updateNutrition('totalSugars', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 ml-8 text-sm">
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-1">Added Sugars (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.addedSugars}
+                      onChange={(e) => updateNutrition('addedSugars', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Protein (g)</label>
+                    <input
+                      type="number"
+                      value={nutrition.protein}
+                      onChange={(e) => updateNutrition('protein', e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      step="0.1"
+                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <div className="border-t-2 border-gray-300 pt-3 mt-3">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Vitamin D (mcg)</label>
+                      <input
+                        type="number"
+                        value={nutrition.vitaminD}
+                        onChange={(e) => updateNutrition('vitaminD', e.target.value)}
+                        placeholder="0"
+                        min="0"
+                        step="0.1"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        disabled={submitting}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Calcium (mg)</label>
+                      <input
+                        type="number"
+                        value={nutrition.calcium}
+                        onChange={(e) => updateNutrition('calcium', e.target.value)}
+                        placeholder="0"
+                        min="0"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        disabled={submitting}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mt-3">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Iron (mg)</label>
+                      <input
+                        type="number"
+                        value={nutrition.iron}
+                        onChange={(e) => updateNutrition('iron', e.target.value)}
+                        placeholder="0"
+                        min="0"
+                        step="0.1"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        disabled={submitting}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Potassium (mg)</label>
+                      <input
+                        type="number"
+                        value={nutrition.potassium}
+                        onChange={(e) => updateNutrition('potassium', e.target.value)}
+                        placeholder="0"
+                        min="0"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        disabled={submitting}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
