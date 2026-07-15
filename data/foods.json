@@ -32,5 +32,20 @@
     "protein": 9,
     "carbs": 0,
     "fat": 0
+  },
+  {
+    "id": "75407399",
+    "name": "STARK FOOD, Filet of Mackerel (In Olive Oil)",
+    "servings": [
+      {
+        "label": "serving",
+        "grams": 90
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
+    "calories": 209,
+    "protein": 18.7,
+    "carbs": 0.45,
+    "fat": 13
   }
 ]
