@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import EntriesTable from '@/app/components/EntriesTable';
 import EnergyCircles from '@/app/components/EnergyCircles';
 import TargetsPanel from '@/app/components/TargetsPanel';
 import NutrientTargets from '@/app/components/NutrientTargets';
 import AddEntryForm from '@/app/components/AddEntryForm';
-import AddFoodModal from '@/app/components/AddFoodModal';
 import ManageFoodsModal from '@/app/components/ManageFoodsModal';
 import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
@@ -31,6 +31,7 @@ interface Food {
 const FOOD_DATABASE: Food[] = foodsData;
 
 export default function Home() {
+  const router = useRouter();
   const [entries, setEntries] = useState<NutritionEntry[]>([]);
   const [foods, setFoods] = useState<Food[]>(FOOD_DATABASE);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -38,7 +39,6 @@ export default function Home() {
   const [animatingId, setAnimatingId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [isAddFoodOpen, setIsAddFoodOpen] = useState(false);
   const [isManageFoodsOpen, setIsManageFoodsOpen] = useState(false);
   const [targets, setTargets] = useState<NutritionTargets>(DEFAULT_TARGETS);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -177,22 +177,6 @@ export default function Home() {
     }
   };
 
-  const handleAddFood = async (newFood: Food) => {
-    try {
-      const res = await fetch('/api/foods', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newFood),
-      });
-
-      if (res.ok) {
-        const savedFood = await res.json();
-        setFoods([...foods, savedFood]);
-      }
-    } catch (error) {
-      console.error('Failed to add food:', error);
-    }
-  };
 
   const handleDeleteFood = async (id: string) => {
     try {
@@ -281,10 +265,10 @@ export default function Home() {
                 ⚙️
               </button>
               <button
-                onClick={() => setIsAddFoodOpen(true)}
+                onClick={() => router.push('/foods/add')}
                 className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                🍎 Add Food
+                🍎 Create Food
               </button>
               <button
                 onClick={() => setIsFormOpen(true)}
@@ -378,13 +362,6 @@ export default function Home() {
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
         foods={foods}
-      />
-
-      {/* Add Food Modal */}
-      <AddFoodModal
-        isOpen={isAddFoodOpen}
-        onClose={() => setIsAddFoodOpen(false)}
-        onAdd={handleAddFood}
       />
 
       {/* Manage Foods Modal */}
