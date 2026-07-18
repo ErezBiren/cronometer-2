@@ -67,6 +67,16 @@ export default function EntriesTable({
     const food = foods.find(f => f.name === foodName);
     return food?.servings || [];
   };
+
+  const totals = entries.reduce(
+    (sum, e) => ({
+      calories: sum.calories + e.calories,
+      protein: sum.protein + e.protein,
+      carbs: sum.carbs + e.carbs,
+      fat: sum.fat + e.fat,
+    }),
+    { calories: 0, protein: 0, carbs: 0, fat: 0 }
+  );
   if (loading) {
     return (
       <div className="flex justify-center py-8">
@@ -90,10 +100,9 @@ export default function EntriesTable({
         <thead className="bg-gray-100 border-b-2 border-gray-200">
           <tr>
             <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Food</th>
-            <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Quantity</th>
-            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Serving Size</th>
-            <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700">Calories</th>
-            <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700">Actions</th>
+            <th colSpan={4} className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+              Total: {Math.round(totals.calories)} kcal &middot; {Math.round(totals.protein * 10) / 10}g protein &middot; {Math.round(totals.carbs * 10) / 10}g carbs &middot; {Math.round(totals.fat * 10) / 10}g fat
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">

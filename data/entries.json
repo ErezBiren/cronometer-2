@@ -42,5 +42,49 @@
     "carbs": 0,
     "fat": 0,
     "id": "1784401137913"
+  },
+  {
+    "date": "2026-07-18",
+    "food": "Chicken Breast",
+    "serving": "1g",
+    "quantity": 162,
+    "calories": 280,
+    "protein": 50.1,
+    "carbs": 0,
+    "fat": 7.3,
+    "id": "1784402295302"
+  },
+  {
+    "date": "2026-07-18",
+    "food": "Chicken Breast",
+    "serving": "1g",
+    "quantity": 175,
+    "calories": 303,
+    "protein": 54.1,
+    "carbs": 0,
+    "fat": 7.9,
+    "id": "1784402337839"
+  },
+  {
+    "date": "2026-07-18",
+    "food": "STARK FOOD, Filet of Mackerel (In Olive Oil)",
+    "serving": "serving",
+    "quantity": 1,
+    "calories": 188,
+    "protein": 16.8,
+    "carbs": 0.4,
+    "fat": 11.7,
+    "id": "1784402360076"
+  },
+  {
+    "date": "2026-07-18",
+    "food": "Whey Protein Powder",
+    "serving": "1 scoop (30g)",
+    "quantity": 1,
+    "calories": 11,
+    "protein": 2.2,
+    "carbs": 0.2,
+    "fat": 0.1,
+    "id": "1784402549007"
   }
 ]

@@ -4,19 +4,15 @@
     "name": "Chicken Breast",
     "servings": [
       {
-        "label": "1 cup (245g)",
-        "grams": 245
-      },
-      {
-        "label": "100g",
-        "grams": 100
+        "label": "1g",
+        "grams": 1
       }
     ],
     "image": "/images/chicken-breast.jpg",
-    "calories": 425,
-    "protein": 75.86,
+    "calories": 173,
+    "protein": 30.9,
     "carbs": 0,
-    "fat": 11.07
+    "fat": 4.5
   },
   {
     "id": "1784093301746",
@@ -85,5 +81,20 @@
     "protein": 7.2,
     "carbs": 0.56,
     "fat": 0.23
+  },
+  {
+    "id": "1784402530670",
+    "name": "gold standard whey",
+    "servings": [
+      {
+        "label": "scoop",
+        "grams": 30
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
+    "calories": 0,
+    "protein": 23.9,
+    "carbs": 0,
+    "fat": 0
   }
 ]
