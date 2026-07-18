@@ -71,13 +71,13 @@ export async function DELETE(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     await ensureDataFile();
-    const { id, calories, protein, carbs, fat } = await request.json();
+    const { id, quantity, serving, calories, protein, carbs, fat } = await request.json();
     const data = await fs.readFile(DATA_FILE, 'utf-8');
     const entries = JSON.parse(data) as NutritionEntry[];
 
     const updated = entries.map(e =>
       e.id === id
-        ? { ...e, calories, protein, carbs, fat }
+        ? { ...e, quantity, serving, calories, protein, carbs, fat }
         : e
     );
 
