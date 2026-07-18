@@ -68,6 +68,11 @@ export default function EntriesTable({
     return food?.servings || [];
   };
 
+  const getImageForFood = (foodName: string): string | undefined => {
+    const food = foods.find(f => f.name === foodName);
+    return food?.image;
+  };
+
   const totals = entries.reduce(
     (sum, e) => ({
       calories: sum.calories + e.calories,
@@ -115,7 +120,16 @@ export default function EntriesTable({
               style={{ animationDelay: `${idx * 50}ms` }}
             >
               <td className="px-6 py-4">
-                <p className="font-semibold text-gray-900">{entry.food}</p>
+                <div className="flex items-center gap-3">
+                  {getImageForFood(entry.food) && (
+                    <img
+                      src={getImageForFood(entry.food)}
+                      alt={entry.food}
+                      className="size-16 rounded-full object-cover"
+                    />
+                  )}
+                  <p className="font-semibold text-gray-900">{entry.food}</p>
+                </div>
               </td>
               <td className="px-6 py-4 text-center">
                 {editingId === entry.id ? (
