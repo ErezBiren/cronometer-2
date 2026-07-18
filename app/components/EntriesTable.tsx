@@ -104,8 +104,8 @@ export default function EntriesTable({
       <table className="w-full">
         <thead className="bg-gray-100 border-b-2 border-gray-200">
           <tr>
-            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Food</th>
-            <th colSpan={4} className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+            <th className="px-6 py-2 text-left text-sm font-semibold text-gray-700">Food</th>
+            <th colSpan={4} className="px-6 py-2 text-left text-sm font-semibold text-gray-700">
               Total: {Math.round(totals.calories)} kcal &middot; {Math.round(totals.protein * 10) / 10}g protein &middot; {Math.round(totals.carbs * 10) / 10}g carbs &middot; {Math.round(totals.fat * 10) / 10}g fat
             </th>
           </tr>
@@ -119,19 +119,19 @@ export default function EntriesTable({
               }`}
               style={{ animationDelay: `${idx * 50}ms` }}
             >
-              <td className="px-6 py-4">
+              <td className="px-6 py-2">
                 <div className="flex items-center gap-3">
                   {getImageForFood(entry.food) && (
                     <img
                       src={getImageForFood(entry.food)}
                       alt={entry.food}
-                      className="size-16 rounded-full object-cover"
+                      className="size-12 rounded-full object-cover"
                     />
                   )}
                   <p className="font-semibold text-gray-900">{entry.food}</p>
                 </div>
               </td>
-              <td className="px-6 py-4 text-center">
+              <td className="px-6 py-2 text-center">
                 {editingId === entry.id ? (
                   <input
                     type="number"
@@ -151,7 +151,7 @@ export default function EntriesTable({
                   </span>
                 )}
               </td>
-              <td className="px-6 py-4 text-left">
+              <td className="px-6 py-2 text-left">
                 {editingId === entry.id ? (
                   <select
                     value={editingServing}
@@ -174,8 +174,8 @@ export default function EntriesTable({
                   </span>
                 )}
               </td>
-              <td className="px-6 py-4 text-right font-bold text-gray-900">{entry.calories} kcal</td>
-              <td className="px-6 py-4 text-right">
+              <td className="px-6 py-2 text-right font-bold text-gray-900">{entry.calories} kcal</td>
+              <td className="px-6 py-2 text-right">
                 <button
                   onClick={() => onDelete(entry.id)}
                   disabled={savingId === entry.id}
