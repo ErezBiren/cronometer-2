@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PWAInstaller from "./components/PWAInstaller";
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     ],
     apple: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%233b82f6' width='192' height='192'/><text x='96' y='120' font-size='80' font-weight='bold' text-anchor='middle' fill='white'>📊</text></svg>",
   },
+};
+
+export const viewport: Viewport = {
   themeColor: "#3b82f6",
 };
 
