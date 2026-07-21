@@ -3,11 +3,88 @@
     "date": "2026-07-21",
     "food": "Chicken Breast",
     "serving": "g",
-    "quantity": 1,
-    "calories": 2,
-    "protein": 0.3,
+    "quantity": 126,
+    "calories": 218,
+    "protein": 38.9,
     "carbs": 0,
-    "fat": 0,
+    "fat": 5.7,
     "id": "1784662107182"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "גבנצ 9%",
+    "serving": "1 peace",
+    "quantity": 2,
+    "calories": 76,
+    "protein": 5.1,
+    "carbs": 1.8,
+    "fat": 5.4,
+    "id": "1784662382791"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "Eggs, Cooked",
+    "serving": "1 large egg (50g)",
+    "quantity": 1,
+    "calories": 20,
+    "protein": 1.6,
+    "carbs": 0.2,
+    "fat": 1.4,
+    "id": "1784662396875"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "Chicken Breast",
+    "serving": "g",
+    "quantity": 158,
+    "calories": 273,
+    "protein": 48.8,
+    "carbs": 0,
+    "fat": 7.1,
+    "id": "1784662495659"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "Whey Protein Powder",
+    "serving": "1 scoop (31g)",
+    "quantity": 1,
+    "calories": 11,
+    "protein": 2.2,
+    "carbs": 0.2,
+    "fat": 0.1,
+    "id": "1784662519806"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "STARK FOOD, Filet of Mackerel (In Olive Oil)",
+    "serving": "serving",
+    "quantity": 1,
+    "calories": 209,
+    "protein": 18.7,
+    "carbs": 0.5,
+    "fat": 13,
+    "id": "1784662542692"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "Chicken Breast",
+    "serving": "g",
+    "quantity": 44,
+    "calories": 76,
+    "protein": 13.6,
+    "carbs": 0,
+    "fat": 2,
+    "id": "1784662547252"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "Tnuva Cotage cheese 5% Fat",
+    "serving": "Serving-250g",
+    "quantity": 1,
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 31.3,
+    "id": "1784662553465"
   }
 ]

@@ -160,6 +160,7 @@ export default function AddEntryForm({
                   min="1"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value || '1')}
+                  onFocus={(e) => e.target.select()}
                   className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-center text-gray-900"
                   disabled={submitting}
                 />
