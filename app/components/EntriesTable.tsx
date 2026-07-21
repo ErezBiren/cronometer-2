@@ -139,6 +139,8 @@ export default function EntriesTable({
                     value={editingQuantity}
                     onChange={(e) => setEditingQuantity(e.target.value)}
                     onBlur={() => handleBlur(entry.id)}
+                    onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+                    onFocus={(e) => e.target.select()}
                     className="w-16 px-2 py-1 border-2 border-blue-200 rounded text-center font-semibold text-gray-900"
                     autoFocus
                   />
