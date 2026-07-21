@@ -37,6 +37,10 @@ export default function HomeContent() {
   const [entries, setEntries] = useState<NutritionEntry[]>([]);
   const [foods, setFoods] = useState<Food[]>(FOOD_DATABASE);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const formatSelectedDate = (dateStr: string) => {
+    if (dateStr === new Date().toISOString().split('T')[0]) return 'Today';
+    return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
   const [loading, setLoading] = useState(true);
   const [animatingId, setAnimatingId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -237,7 +241,7 @@ export default function HomeContent() {
                 ◄
               </button>
               <span className="text-lg font-semibold text-gray-800 min-w-[100px] text-center">
-                {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                {formatSelectedDate(selectedDate)}
               </span>
               <button
                 onClick={() => {
