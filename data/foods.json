@@ -92,5 +92,20 @@
     "protein": 77.4,
     "carbs": 9.7,
     "fat": 3.2
+  },
+  {
+    "id": "1784660013804",
+    "name": "Tnuva Cotage cheese 5% Fat",
+    "servings": [
+      {
+        "label": "Serving-250g",
+        "grams": 250
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 12.5
   }
 ]
