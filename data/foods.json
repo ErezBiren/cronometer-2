@@ -24,9 +24,10 @@
       }
     ],
     "image": "/images/yellow-cheese-9.jpg",
-    "protein": 8.5,
-    "carbs": 0.2,
-    "fat": 2.6
+    "calories": 201,
+    "protein": 30,
+    "carbs": 0.5,
+    "fat": 9
   },
   {
     "id": "75407399",

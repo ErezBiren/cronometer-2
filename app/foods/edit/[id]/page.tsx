@@ -13,7 +13,7 @@ interface Food {
   name: string;
   servings: Serving[];
   image: string;
-  calories: number;
+  calories?: number;
   protein: number;
   carbs: number;
   fat: number;
@@ -77,7 +77,7 @@ export default function EditFoodPage() {
           setServings(food.servings);
           setImage(food.image);
           setNutrition({
-            calories: food.calories.toString(),
+            calories: (food.calories ?? 0).toString(),
             totalFat: food.fat.toString(),
             saturatedFat: '',
             transFat: '',
