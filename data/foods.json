@@ -34,7 +34,7 @@
     "name": "STARK FOOD, Filet of Mackerel (In Olive Oil)",
     "servings": [
       {
-        "label": "serving",
+        "label": "serving-90",
         "grams": 90
       }
     ],
@@ -49,7 +49,7 @@
     "name": "Eggs, Cooked",
     "servings": [
       {
-        "label": "1 large egg (50g)",
+        "label": "1 large egg",
         "grams": 50
       },
       {
@@ -68,7 +68,7 @@
     "name": "Whey Protein Powder",
     "servings": [
       {
-        "label": "1 scoop (31g)",
+        "label": "1 scoop",
         "grams": 31
       }
     ],
@@ -102,7 +102,7 @@
         "grams": 250
       }
     ],
-        "image": "/images/cottage-5.png",
+    "image": "/images/cottage-5.png",
     "calories": 0,
     "protein": 0,
     "carbs": 0,
