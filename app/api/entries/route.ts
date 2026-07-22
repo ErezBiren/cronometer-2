@@ -7,7 +7,7 @@ const DATA_FILE = path.join(process.cwd(), 'data', 'entries.json');
 interface NutritionEntry {
   id: string;
   date: string;
-  food: string;
+  foodId: string;
   serving: string;
   quantity: number;
   calories: number;

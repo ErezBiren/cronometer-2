@@ -21,7 +21,7 @@ interface AddEntryFormProps {
   onClose: () => void;
   onSubmit: (data: {
     date: string;
-    food: string;
+    foodId: string;
     serving: string;
     quantity: number;
     calories: number;
@@ -82,7 +82,7 @@ export default function AddEntryForm({
     try {
       await onSubmit({
         date: selectedDate,
-        food: selectedFood.name,
+        foodId: selectedFood.id,
         serving: selectedServing.label,
         quantity: qty,
         calories: Math.round((selectedFood.calories ?? 0) * servingRatio * qty),

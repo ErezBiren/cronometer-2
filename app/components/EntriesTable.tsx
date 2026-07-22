@@ -63,14 +63,8 @@ export default function EntriesTable({
     handleSaveInline(id);
   };
 
-  const getServingsForFood = (foodName: string): Serving[] => {
-    const food = foods.find(f => f.name === foodName);
-    return food?.servings || [];
-  };
-
-  const getImageForFood = (foodName: string): string | undefined => {
-    const food = foods.find(f => f.name === foodName);
-    return food?.image;
+  const getFoodById = (foodId: string): Food | undefined => {
+    return foods.find(f => f.id === foodId);
   };
 
   const totals = entries.reduce(
@@ -111,7 +105,9 @@ export default function EntriesTable({
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {entries.map((entry, idx) => (
+          {entries.map((entry, idx) => {
+            const food = getFoodById(entry.foodId);
+            return (
             <tr
               key={entry.id}
               className={`hover:bg-gray-50 transition-colors ${
@@ -121,14 +117,14 @@ export default function EntriesTable({
             >
               <td className="px-6 py-2">
                 <div className="flex items-center gap-3">
-                  {getImageForFood(entry.food) && (
+                  {food?.image && (
                     <img
-                      src={getImageForFood(entry.food)}
-                      alt={entry.food}
+                      src={food.image}
+                      alt={food.name}
                       className="size-12 rounded-full object-cover"
                     />
                   )}
-                  <p className="font-semibold text-gray-900">{entry.food}</p>
+                  <p className="font-semibold text-gray-900">{food?.name}</p>
                 </div>
               </td>
               <td className="px-6 py-2 text-center">
@@ -161,7 +157,7 @@ export default function EntriesTable({
                     onBlur={() => handleBlur(entry.id)}
                     className="px-2 py-1 border-2 border-blue-200 rounded font-semibold text-gray-900"
                   >
-                    {getServingsForFood(entry.food).map((serving) => (
+                    {(food?.servings || []).map((serving) => (
                       <option key={serving.label} value={serving.label}>
                         {serving.label}
                       </option>
@@ -189,7 +185,8 @@ export default function EntriesTable({
                 </button>
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>

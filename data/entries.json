@@ -1,7 +1,7 @@
 [
   {
     "date": "2026-07-21",
-    "food": "Chicken Breast",
+    "foodId": "1",
     "serving": "g",
     "quantity": 162,
     "calories": 280,
@@ -12,7 +12,7 @@
   },
   {
     "date": "2026-07-21",
-    "food": "גבנצ 9%",
+    "foodId": "1784093301746",
     "serving": "1 peace",
     "quantity": 2,
     "calories": 35,
@@ -23,7 +23,7 @@
   },
   {
     "date": "2026-07-21",
-    "food": "Eggs, Cooked",
+    "foodId": "77053864",
     "serving": "1 large egg (50g)",
     "quantity": 1,
     "calories": 20,
@@ -34,7 +34,7 @@
   },
   {
     "date": "2026-07-21",
-    "food": "Chicken Breast",
+    "foodId": "1",
     "serving": "g",
     "quantity": 158,
     "calories": 273,
@@ -45,7 +45,7 @@
   },
   {
     "date": "2026-07-21",
-    "food": "STARK FOOD, Filet of Mackerel (In Olive Oil)",
+    "foodId": "75407399",
     "serving": "serving",
     "quantity": 1,
     "calories": 209,
@@ -56,7 +56,7 @@
   },
   {
     "date": "2026-07-21",
-    "food": "Chicken Breast",
+    "foodId": "1",
     "serving": "g",
     "quantity": 44,
     "calories": 76,
@@ -67,7 +67,7 @@
   },
   {
     "date": "2026-07-21",
-    "food": "Tnuva Cotage cheese 5% Fat",
+    "foodId": "1784660013804",
     "serving": "Serving-250g",
     "quantity": 1,
     "calories": 0,
@@ -78,7 +78,7 @@
   },
   {
     "date": "2026-07-21",
-    "food": "Optimum Nutrition Gold Standard 100% Whey",
+    "foodId": "1784402530670",
     "serving": "1 scoop",
     "quantity": 1,
     "calories": 120,

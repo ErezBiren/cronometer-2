@@ -24,7 +24,7 @@ interface Food {
 interface NutritionEntry {
   id: string;
   date: string;
-  food: string;
+  foodId: string;
   serving: string;
   quantity: number;
   calories: number;
@@ -33,13 +33,13 @@ interface NutritionEntry {
   fat: number;
 }
 
-async function syncEntriesWithFood(oldName: string, updatedFood: Food) {
+async function syncEntriesWithFood(updatedFood: Food) {
   try {
     const data = await fs.readFile(ENTRIES_FILE, 'utf-8');
     const entries = JSON.parse(data) as NutritionEntry[];
 
     const synced = entries.map(entry => {
-      if (entry.food !== oldName) return entry;
+      if (entry.foodId !== updatedFood.id) return entry;
 
       const serving = updatedFood.servings.find(s => s.label === entry.serving);
       if (!serving) return entry;
@@ -47,7 +47,6 @@ async function syncEntriesWithFood(oldName: string, updatedFood: Food) {
       const ratio = (serving.grams * entry.quantity) / 100;
       return {
         ...entry,
-        food: updatedFood.name,
         calories: Math.round(updatedFood.calories * ratio),
         protein: Math.round(updatedFood.protein * ratio * 10) / 10,
         carbs: Math.round(updatedFood.carbs * ratio * 10) / 10,
@@ -104,13 +103,10 @@ export async function PUT(request: NextRequest) {
     const data = await fs.readFile(DATA_FILE, 'utf-8');
     const foods = JSON.parse(data) as Food[];
 
-    const oldFood = foods.find(f => f.id === updatedFood.id);
     const updated = foods.map(f => (f.id === updatedFood.id ? updatedFood : f));
     await fs.writeFile(DATA_FILE, JSON.stringify(updated, null, 2));
 
-    if (oldFood) {
-      await syncEntriesWithFood(oldFood.name, updatedFood);
-    }
+    await syncEntriesWithFood(updatedFood);
 
     return NextResponse.json(updatedFood);
   } catch (error) {

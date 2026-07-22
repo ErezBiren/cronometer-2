@@ -77,7 +77,7 @@ export default function HomeContent() {
 
   const handleAddEntry = async (data: {
     date: string;
-    food: string;
+    foodId: string;
     quantity: number;
     calories: number;
     protein: number;
@@ -157,7 +157,7 @@ export default function HomeContent() {
       const entry = entries.find(e => e.id === id);
       if (!entry) return;
 
-      const food = foods.find(f => f.name === entry.food);
+      const food = foods.find(f => f.id === entry.foodId);
       if (!food) return;
 
       const selectedServing = food.servings.find(s => s.label === serving);
