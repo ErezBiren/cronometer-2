@@ -23,17 +23,6 @@
   },
   {
     "date": "2026-07-21",
-    "foodId": "77053864",
-    "serving": "1 large egg (50g)",
-    "quantity": 1,
-    "calories": 20,
-    "protein": 1.6,
-    "carbs": 0.2,
-    "fat": 1.4,
-    "id": "1784662396875"
-  },
-  {
-    "date": "2026-07-21",
     "foodId": "1",
     "serving": "g",
     "quantity": 158,
@@ -86,5 +75,16 @@
     "carbs": 4,
     "fat": 1.5,
     "id": "1784741902891"
+  },
+  {
+    "date": "2026-07-21",
+    "foodId": "77053864",
+    "serving": "1 large egg",
+    "quantity": 1,
+    "calories": 78,
+    "protein": 6.3,
+    "carbs": 0.6,
+    "fat": 5.3,
+    "id": "1784744286089"
   }
 ]

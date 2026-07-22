@@ -51,17 +51,13 @@
       {
         "label": "1 large egg",
         "grams": 50
-      },
-      {
-        "label": "100g",
-        "grams": 100
       }
     ],
     "image": "/images/eggs.jpg",
-    "calories": 39,
-    "protein": 3.1,
-    "carbs": 0.3,
-    "fat": 2.7
+    "calories": 155,
+    "protein": 12.5,
+    "carbs": 1.1,
+    "fat": 10.6
   },
   {
     "id": "77054127",
