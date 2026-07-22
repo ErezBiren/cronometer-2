@@ -23,11 +23,10 @@
         "grams": 30
       }
     ],
-    "image": "/images/yellow-cheese-9.jpg",
-    "calories": 127,
+   "image": "/images/yellow-cheese-9.jpg",
     "protein": 8.5,
-    "carbs": 3,
-    "fat": 9
+    "carbs": 0.2,
+    "fat": 2.6
   },
   {
     "id": "75407399",
@@ -38,7 +37,7 @@
         "grams": 90
       }
     ],
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
+   "image": "/images/mackerelFillets.jpg",
     "calories": 232,
     "protein": 20.8,
     "carbs": 0.5,

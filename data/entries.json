@@ -3,11 +3,11 @@
     "date": "2026-07-21",
     "food": "Chicken Breast",
     "serving": "g",
-    "quantity": 126,
-    "calories": 218,
-    "protein": 38.9,
+    "quantity": 162,
+    "calories": 280,
+    "protein": 50.1,
     "carbs": 0,
-    "fat": 5.7,
+    "fat": 7.3,
     "id": "1784662107182"
   },
   {
@@ -15,10 +15,10 @@
     "food": "גבנצ 9%",
     "serving": "1 peace",
     "quantity": 2,
-    "calories": 76,
+    "calories": 35,
     "protein": 5.1,
-    "carbs": 1.8,
-    "fat": 5.4,
+    "carbs": 0.1,
+    "fat": 1.6,
     "id": "1784662382791"
   },
   {
