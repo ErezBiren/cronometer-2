@@ -105,7 +105,7 @@ export default function EntriesTable({
         <thead className="bg-gray-100 border-b-2 border-gray-200">
           <tr>
             <th className="px-6 py-2 text-left text-sm font-semibold text-gray-700">Food</th>
-            <th colSpan={4} className="px-6 py-2 text-left text-sm font-semibold text-gray-700">
+            <th colSpan={5} className="px-6 py-2 text-left text-sm font-semibold text-gray-700">
               Total: {Math.round(totals.calories)} kcal &middot; {Math.round(totals.protein * 10) / 10}g protein &middot; {Math.round(totals.carbs * 10) / 10}g carbs &middot; {Math.round(totals.fat * 10) / 10}g fat
             </th>
           </tr>
@@ -176,6 +176,7 @@ export default function EntriesTable({
                   </span>
                 )}
               </td>
+              <td className="px-6 py-2 text-right text-gray-700">{entry.protein}g</td>
               <td className="px-6 py-2 text-right font-bold text-gray-900">{entry.calories} kcal</td>
               <td className="px-6 py-2 text-right">
                 <button
