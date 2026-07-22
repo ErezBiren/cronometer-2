@@ -75,7 +75,11 @@ export default function ManageFoodsModal({ isOpen, onClose, foods, onDelete }: M
                     ✏️ Edit
                   </button>
                   <button
-                    onClick={() => onDelete(food.id)}
+                    onClick={() => {
+                      if (confirm(`Delete "${food.name}"? This cannot be undone.`)) {
+                        onDelete(food.id);
+                      }
+                    }}
                     className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded transition"
                     title="Delete"
                   >
