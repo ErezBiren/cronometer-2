@@ -23,7 +23,7 @@ interface Food {
   name: string;
   servings: Serving[];
   image: string;
-  calories: number;
+  calories?: number;
   protein: number;
   carbs: number;
   fat: number;
@@ -172,7 +172,7 @@ export default function HomeContent() {
           id,
           quantity,
           serving,
-          calories: Math.round(food.calories * servingRatio * quantity),
+          calories: Math.round((food.calories ?? 0) * servingRatio * quantity),
           protein: Math.round(food.protein * servingRatio * quantity * 10) / 10,
           carbs: Math.round(food.carbs * servingRatio * quantity * 10) / 10,
           fat: Math.round(food.fat * servingRatio * quantity * 10) / 10,

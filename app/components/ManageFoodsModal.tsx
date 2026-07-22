@@ -12,7 +12,7 @@ interface Food {
   name: string;
   servings: Serving[];
   image: string;
-  calories: number;
+  calories?: number;
   protein: number;
   carbs: number;
   fat: number;

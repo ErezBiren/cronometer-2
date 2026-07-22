@@ -10,7 +10,7 @@ interface Food {
   name: string;
   servings: Serving[];
   image: string;
-  calories: number;
+  calories?: number;
   protein: number;
   carbs: number;
   fat: number;
@@ -85,7 +85,7 @@ export default function AddEntryForm({
         food: selectedFood.name,
         serving: selectedServing.label,
         quantity: qty,
-        calories: Math.round(selectedFood.calories * servingRatio * qty),
+        calories: Math.round((selectedFood.calories ?? 0) * servingRatio * qty),
         protein:
           Math.round(selectedFood.protein * servingRatio * qty * 10) / 10,
         carbs: Math.round(selectedFood.carbs * servingRatio * qty * 10) / 10,
