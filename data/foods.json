@@ -23,7 +23,7 @@
         "grams": 30
       }
     ],
-   "image": "/images/yellow-cheese-9.jpg",
+    "image": "/images/yellow-cheese-9.jpg",
     "protein": 8.5,
     "carbs": 0.2,
     "fat": 2.6
@@ -37,7 +37,7 @@
         "grams": 90
       }
     ],
-   "image": "/images/mackerelFillets.jpg",
+    "image": "/images/mackerelFillets.jpg",
     "calories": 232,
     "protein": 20.8,
     "carbs": 0.5,
@@ -64,7 +64,7 @@
   },
   {
     "id": "77054127",
-    "name": "Whey Protein Powder",
+    "name": "Optimum Nutrition Gold Standard 100% Whey",
     "servings": [
       {
         "label": "1 scoop",
@@ -72,25 +72,10 @@
       }
     ],
     "image": "/images/whey.png",
-    "calories": 35,
-    "protein": 7.2,
-    "carbs": 0.56,
-    "fat": 0.23
-  },
-  {
-    "id": "1784402530670",
-    "name": "gold standard whey",
-    "servings": [
-      {
-        "label": "scoop",
-        "grams": 30
-      }
-    ],
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop",
-    "calories": 387,
-    "protein": 77.4,
-    "carbs": 9.7,
-    "fat": 3.2
+    "calories": 120,
+    "protein": 24,
+    "carbs": 4,
+    "fat": 1.5
   },
   {
     "id": "1784660013804",
