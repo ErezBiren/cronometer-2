@@ -67,19 +67,19 @@
     "name": "Optimum Nutrition Gold Standard 100% Whey",
     "servings": [
       {
-        "label": "1 scoop",
+        "label": "1 scoop(31)",
         "grams": 31
       }
     ],
     "image": "/images/whey.png",
-    "calories": 120,
-    "protein": 24,
-    "carbs": 4,
-    "fat": 1.5
+    "calories": 387,
+    "protein": 77.4,
+    "carbs": 12.9,
+    "fat": 4.8
   },
   {
     "id": "1784660013804",
-    "name": "Tnuva Cotage cheese 5% Fat",
+    "name": "Tnuva Cottage cheese 5% Fat",
     "servings": [
       {
         "label": "Serving-250g",
@@ -87,9 +87,9 @@
       }
     ],
     "image": "/images/cottage-5.png",
-    "calories": 0,
-    "protein": 0,
-    "carbs": 0,
-    "fat": 12.5
+    "calories": 95,
+    "protein": 11,
+    "carbs": 1.5,
+    "fat": 5
   }
 ]

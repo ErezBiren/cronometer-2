@@ -45,17 +45,6 @@
   },
   {
     "date": "2026-07-21",
-    "food": "Whey Protein Powder",
-    "serving": "1 scoop (31g)",
-    "quantity": 1,
-    "calories": 11,
-    "protein": 2.2,
-    "carbs": 0.2,
-    "fat": 0.1,
-    "id": "1784662519806"
-  },
-  {
-    "date": "2026-07-21",
     "food": "STARK FOOD, Filet of Mackerel (In Olive Oil)",
     "serving": "serving",
     "quantity": 1,
@@ -86,5 +75,16 @@
     "carbs": 0,
     "fat": 31.3,
     "id": "1784662553465"
+  },
+  {
+    "date": "2026-07-21",
+    "food": "Optimum Nutrition Gold Standard 100% Whey",
+    "serving": "1 scoop",
+    "quantity": 1,
+    "calories": 120,
+    "protein": 24,
+    "carbs": 4,
+    "fat": 1.5,
+    "id": "1784741902891"
   }
 ]
