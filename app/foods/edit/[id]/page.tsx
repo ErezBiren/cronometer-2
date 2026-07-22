@@ -61,6 +61,7 @@ export default function EditFoodPage() {
     potassium: '',
   });
   const [servings, setServings] = useState<Serving[]>([{ label: '100g', grams: 100 }]);
+  const [image, setImage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -74,6 +75,7 @@ export default function EditFoodPage() {
         if (food) {
           setName(food.name);
           setServings(food.servings);
+          setImage(food.image);
           setNutrition({
             calories: food.calories.toString(),
             totalFat: food.fat.toString(),
@@ -144,7 +146,7 @@ export default function EditFoodPage() {
         id: foodId,
         name: name.trim(),
         servings: servings,
-        image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop',
+        image,
         calories: parseInt(nutrition.calories) || 0,
         protein: parseFloat(nutrition.protein) || 0,
         carbs: parseFloat(nutrition.totalCarbs) || 0,
