@@ -297,7 +297,7 @@ export default function HomeContent() {
 
         {/* Mobile Date Control - Below Header */}
         <div className="md:hidden mb-4">
-          <div className="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-lg px-4 py-3">
+          <div className="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-lg px-4 py-0.5">
             <button
               onClick={() => {
                 const date = new Date(selectedDate);
