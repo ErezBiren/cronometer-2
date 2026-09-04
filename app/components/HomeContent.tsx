@@ -339,6 +339,20 @@ export default function HomeContent() {
           </div>
         </div>
 
+        {/* Dashboard Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+          <div className="lg:col-span-2 hidden md:block">
+            <EnergyCircles consumed={totals.calories} expenditure={DAILY_EXPENDITURE} />
+          </div>
+          <div>
+            <TargetsPanel
+              consumed={totals}
+              targets={targets}
+              expenditure={DAILY_EXPENDITURE}
+            />
+          </div>
+        </div>
+
         {/* Entries Table */}
         <div className="mb-8">
           <EntriesTable
@@ -350,20 +364,6 @@ export default function HomeContent() {
             loading={loading}
             animatingId={animatingId}
           />
-        </div>
-
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 hidden md:block">
-            <EnergyCircles consumed={totals.calories} expenditure={DAILY_EXPENDITURE} />
-          </div>
-          <div>
-            <TargetsPanel
-              consumed={totals}
-              targets={targets}
-              expenditure={DAILY_EXPENDITURE}
-            />
-          </div>
         </div>
 
         {/* Nutrient Targets */}
