@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Database setup
+
+Data (foods and entries) is stored in Postgres via [Neon](https://neon.tech), provisioned as a free Vercel Storage integration.
+
+1. In the Vercel dashboard, open your project's **Storage** tab and create a **Neon Postgres** database (free tier).
+2. Copy the `DATABASE_URL` it gives you into a `.env.local` file at the project root (see `env.example`). For local dev, pull it with `vercel env pull .env.local` instead if the project is already linked.
+3. Run `npm run db:migrate` once to create the `foods`/`entries` tables and seed them from the existing `data/*.json` files.
+4. In Vercel's project settings, add the same `DATABASE_URL` env var (Vercel does this automatically when you create the DB through the Storage tab).
+
 ## Getting Started
 
 First, run the development server:

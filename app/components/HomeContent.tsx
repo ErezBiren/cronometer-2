@@ -11,7 +11,6 @@ import ManageFoodsModal from '@/app/components/ManageFoodsModal';
 import BottomNavbar from '@/app/components/BottomNavbar';
 import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
-import foodsData from '@/data/foods.json';
 
 interface Serving {
   label: string;
@@ -29,13 +28,11 @@ interface Food {
   fat: number;
 }
 
-const FOOD_DATABASE: Food[] = foodsData;
-
 export default function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [entries, setEntries] = useState<NutritionEntry[]>([]);
-  const [foods, setFoods] = useState<Food[]>(FOOD_DATABASE);
+  const [foods, setFoods] = useState<Food[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const formatSelectedDate = (dateStr: string) => {
     if (dateStr === new Date().toISOString().split('T')[0]) return 'Today';
@@ -55,6 +52,7 @@ export default function HomeContent() {
 
   useEffect(() => {
     fetchEntries();
+    fetchFoods();
     setTargets(getStoredTargets());
 
     // Check if we should open the add entry form from query parameter
@@ -72,6 +70,16 @@ export default function HomeContent() {
       console.error('Failed to fetch entries:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFoods = async () => {
+    try {
+      const res = await fetch('/api/foods');
+      const data = await res.json();
+      setFoods(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Failed to fetch foods:', error);
     }
   };
 
@@ -339,7 +347,7 @@ export default function HomeContent() {
         <div className="mb-8">
           <EntriesTable
             entries={todayEntries}
-            foods={FOOD_DATABASE}
+            foods={foods}
             onDelete={handleDelete}
             onEdit={startEdit}
             onUpdateEntry={handleUpdateEntry}

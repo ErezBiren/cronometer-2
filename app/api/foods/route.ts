@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'foods.json');
-const ENTRIES_FILE = path.join(process.cwd(), 'data', 'entries.json');
+import { sql } from '@/app/lib/db';
 
 interface Serving {
   label: string;
@@ -21,60 +17,57 @@ interface Food {
   fat: number;
 }
 
-interface NutritionEntry {
+interface FoodRow {
   id: string;
-  date: string;
-  foodId: string;
-  serving: string;
-  quantity: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
+  name: string;
+  servings: Serving[];
+  image: string;
+  calories: string;
+  protein: string;
+  carbs: string;
+  fat: string;
+}
+
+function toFood(row: FoodRow): Food {
+  return {
+    id: row.id,
+    name: row.name,
+    servings: row.servings,
+    image: row.image,
+    calories: Number(row.calories),
+    protein: Number(row.protein),
+    carbs: Number(row.carbs),
+    fat: Number(row.fat),
+  };
 }
 
 async function syncEntriesWithFood(updatedFood: Food) {
-  try {
-    const data = await fs.readFile(ENTRIES_FILE, 'utf-8');
-    const entries = JSON.parse(data) as NutritionEntry[];
+  const entries = (await sql`
+    SELECT id, serving, quantity FROM entries WHERE food_id = ${updatedFood.id}
+  `) as { id: string; serving: string; quantity: string }[];
 
-    const synced = entries.map(entry => {
-      if (entry.foodId !== updatedFood.id) return entry;
+  for (const entry of entries) {
+    const serving = updatedFood.servings.find(s => s.label === entry.serving);
+    if (!serving) continue;
 
-      const serving = updatedFood.servings.find(s => s.label === entry.serving);
-      if (!serving) return entry;
+    const ratio = (serving.grams * Number(entry.quantity)) / 100;
+    const calories = Math.round(updatedFood.calories * ratio);
+    const protein = Math.round(updatedFood.protein * ratio * 10) / 10;
+    const carbs = Math.round(updatedFood.carbs * ratio * 10) / 10;
+    const fat = Math.round(updatedFood.fat * ratio * 10) / 10;
 
-      const ratio = (serving.grams * entry.quantity) / 100;
-      return {
-        ...entry,
-        calories: Math.round(updatedFood.calories * ratio),
-        protein: Math.round(updatedFood.protein * ratio * 10) / 10,
-        carbs: Math.round(updatedFood.carbs * ratio * 10) / 10,
-        fat: Math.round(updatedFood.fat * ratio * 10) / 10,
-      };
-    });
-
-    await fs.writeFile(ENTRIES_FILE, JSON.stringify(synced, null, 2));
-  } catch {
-    // No entries file yet — nothing to sync
-  }
-}
-
-async function ensureDataFile() {
-  try {
-    await fs.access(DATA_FILE);
-  } catch {
-    const defaultFoods: Food[] = [];
-    await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
-    await fs.writeFile(DATA_FILE, JSON.stringify(defaultFoods, null, 2));
+    await sql`
+      UPDATE entries
+      SET calories = ${calories}, protein = ${protein}, carbs = ${carbs}, fat = ${fat}
+      WHERE id = ${entry.id}
+    `;
   }
 }
 
 export async function GET() {
   try {
-    await ensureDataFile();
-    const data = await fs.readFile(DATA_FILE, 'utf-8');
-    return NextResponse.json(JSON.parse(data));
+    const rows = (await sql`SELECT * FROM foods ORDER BY name`) as FoodRow[];
+    return NextResponse.json(rows.map(toFood));
   } catch (error) {
     return NextResponse.json({ error: 'Failed to read foods' }, { status: 500 });
   }
@@ -82,15 +75,15 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    await ensureDataFile();
     const food: Food = await request.json();
-    const data = await fs.readFile(DATA_FILE, 'utf-8');
-    const foods = JSON.parse(data) as Food[];
 
-    foods.push(food);
-    await fs.writeFile(DATA_FILE, JSON.stringify(foods, null, 2));
+    const [row] = (await sql`
+      INSERT INTO foods (id, name, servings, image, calories, protein, carbs, fat)
+      VALUES (${food.id}, ${food.name}, ${JSON.stringify(food.servings)}, ${food.image}, ${food.calories}, ${food.protein}, ${food.carbs}, ${food.fat})
+      RETURNING *
+    `) as FoodRow[];
 
-    return NextResponse.json(food, { status: 201 });
+    return NextResponse.json(toFood(row), { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to add food' }, { status: 500 });
   }
@@ -98,17 +91,23 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    await ensureDataFile();
     const updatedFood: Food = await request.json();
-    const data = await fs.readFile(DATA_FILE, 'utf-8');
-    const foods = JSON.parse(data) as Food[];
 
-    const updated = foods.map(f => (f.id === updatedFood.id ? updatedFood : f));
-    await fs.writeFile(DATA_FILE, JSON.stringify(updated, null, 2));
+    const [row] = (await sql`
+      UPDATE foods
+      SET name = ${updatedFood.name}, servings = ${JSON.stringify(updatedFood.servings)}, image = ${updatedFood.image},
+          calories = ${updatedFood.calories}, protein = ${updatedFood.protein}, carbs = ${updatedFood.carbs}, fat = ${updatedFood.fat}
+      WHERE id = ${updatedFood.id}
+      RETURNING *
+    `) as FoodRow[];
 
-    await syncEntriesWithFood(updatedFood);
+    if (!row) {
+      return NextResponse.json({ error: 'Food not found' }, { status: 404 });
+    }
 
-    return NextResponse.json(updatedFood);
+    await syncEntriesWithFood(toFood(row));
+
+    return NextResponse.json(toFood(row));
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update food' }, { status: 500 });
   }
@@ -116,14 +115,8 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    await ensureDataFile();
     const { id } = await request.json();
-    const data = await fs.readFile(DATA_FILE, 'utf-8');
-    const foods = JSON.parse(data) as Food[];
-
-    const filtered = foods.filter(f => f.id !== id);
-    await fs.writeFile(DATA_FILE, JSON.stringify(filtered, null, 2));
-
+    await sql`DELETE FROM foods WHERE id = ${id}`;
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete food' }, { status: 500 });
