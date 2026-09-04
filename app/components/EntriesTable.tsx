@@ -24,7 +24,7 @@ interface EntriesTableProps {
   foods: Food[];
   onDelete: (id: string) => void;
   onEdit: (entry: NutritionEntry) => void;
-  onUpdateEntry: (id: string, quantity: number, serving: string) => Promise<void>;
+  onUpdateEntry: (id: string, quantity: number, serving: string, time: string) => Promise<void>;
   loading: boolean;
   animatingId: string | null;
 }
@@ -41,18 +41,20 @@ export default function EntriesTable({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingQuantity, setEditingQuantity] = useState('');
   const [editingServing, setEditingServing] = useState('');
+  const [editingTime, setEditingTime] = useState('');
   const [savingId, setSavingId] = useState<string | null>(null);
 
   const startInlineEdit = (entry: NutritionEntry) => {
     setEditingId(entry.id);
     setEditingQuantity(entry.quantity.toString());
     setEditingServing(entry.serving);
+    setEditingTime(entry.time);
   };
 
   const handleSaveInline = async (id: string) => {
     setSavingId(id);
     try {
-      await onUpdateEntry(id, parseInt(editingQuantity) || 1, editingServing);
+      await onUpdateEntry(id, parseInt(editingQuantity) || 1, editingServing, editingTime);
       setEditingId(null);
     } finally {
       setSavingId(null);
@@ -99,6 +101,7 @@ export default function EntriesTable({
         <thead className="bg-gray-100 border-b-2 border-gray-200">
           <tr>
             <th className="px-6 py-2 text-left text-sm font-semibold text-gray-700">Food</th>
+            <th className="px-6 py-2 text-left text-sm font-semibold text-gray-700">Time</th>
             <th colSpan={5} className="px-6 py-2 text-left text-sm font-semibold text-gray-700">
               Total: {Math.round(totals.calories)} kcal &middot; {Math.round(totals.protein * 10) / 10}g protein &middot; {Math.round(totals.carbs * 10) / 10}g carbs &middot; {Math.round(totals.fat * 10) / 10}g fat
             </th>
@@ -126,6 +129,24 @@ export default function EntriesTable({
                   )}
                   <p className="font-semibold text-gray-900">{food?.name}</p>
                 </div>
+              </td>
+              <td className="px-6 py-2 text-left">
+                {editingId === entry.id ? (
+                  <input
+                    type="time"
+                    value={editingTime}
+                    onChange={(e) => setEditingTime(e.target.value)}
+                    onBlur={() => handleBlur(entry.id)}
+                    className="px-2 py-1 border-2 border-blue-200 rounded font-semibold text-gray-900"
+                  />
+                ) : (
+                  <span
+                    onClick={() => startInlineEdit(entry)}
+                    className="cursor-pointer text-gray-700 hover:text-blue-600 font-semibold"
+                  >
+                    {entry.time}
+                  </span>
+                )}
               </td>
               <td className="px-6 py-2 text-center">
                 {editingId === entry.id ? (

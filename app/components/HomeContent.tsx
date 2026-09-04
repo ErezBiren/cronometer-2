@@ -85,6 +85,7 @@ export default function HomeContent() {
 
   const handleAddEntry = async (data: {
     date: string;
+    time: string;
     foodId: string;
     quantity: number;
     calories: number;
@@ -160,7 +161,7 @@ export default function HomeContent() {
     }
   };
 
-  const handleUpdateEntry = async (id: string, quantity: number, serving: string) => {
+  const handleUpdateEntry = async (id: string, quantity: number, serving: string, time: string) => {
     try {
       const entry = entries.find(e => e.id === id);
       if (!entry) return;
@@ -180,6 +181,7 @@ export default function HomeContent() {
           id,
           quantity,
           serving,
+          time,
           calories: Math.round((food.calories ?? 0) * servingRatio * quantity),
           protein: Math.round(food.protein * servingRatio * quantity * 10) / 10,
           carbs: Math.round(food.carbs * servingRatio * quantity * 10) / 10,

@@ -21,6 +21,7 @@ interface AddEntryFormProps {
   onClose: () => void;
   onSubmit: (data: {
     date: string;
+    time: string;
     foodId: string;
     serving: string;
     quantity: number;
@@ -44,9 +45,15 @@ export default function AddEntryForm({
   foods,
   isLoading = false,
 }: AddEntryFormProps) {
+  const getCurrentTime = () => {
+    const now = new Date();
+    return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+  };
+
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
   const [selectedServing, setSelectedServing] = useState<Serving | null>(null);
   const [quantity, setQuantity] = useState("1");
+  const [time, setTime] = useState(getCurrentTime());
   const [submitting, setSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const quantityInputRef = useRef<HTMLInputElement>(null);
@@ -90,6 +97,7 @@ export default function AddEntryForm({
     try {
       await onSubmit({
         date: selectedDate,
+        time,
         foodId: selectedFood.id,
         serving: selectedServing.label,
         quantity: qty,
@@ -101,6 +109,7 @@ export default function AddEntryForm({
       });
       setSelectedFood(null);
       setQuantity("1");
+      setTime(getCurrentTime());
       setSearchTerm("");
       onClose();
     } finally {
@@ -170,7 +179,7 @@ export default function AddEntryForm({
           </div>
 
           {selectedFood && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   📊 Quantity
@@ -207,6 +216,19 @@ export default function AddEntryForm({
                     </option>
                   ))}
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  🕒 Time
+                </label>
+                <input
+                  type="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-center text-gray-900"
+                  disabled={submitting}
+                />
               </div>
             </div>
           )}

@@ -1,6 +1,7 @@
 export interface NutritionEntry {
   id: string;
   date: string;
+  time: string;
   foodId: string;
   serving: string;
   quantity: number;

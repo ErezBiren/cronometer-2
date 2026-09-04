@@ -31,6 +31,7 @@ async function main() {
     CREATE TABLE IF NOT EXISTS entries (
       id TEXT PRIMARY KEY,
       date TEXT NOT NULL,
+      time TEXT NOT NULL DEFAULT '12:00',
       food_id TEXT NOT NULL,
       serving TEXT NOT NULL,
       quantity NUMERIC NOT NULL,
@@ -40,6 +41,8 @@ async function main() {
       fat NUMERIC NOT NULL
     )
   `;
+
+  await sql`ALTER TABLE entries ADD COLUMN IF NOT EXISTS time TEXT NOT NULL DEFAULT '12:00'`;
 
   const [{ count: foodCount }] = await sql`SELECT COUNT(*)::int AS count FROM foods`;
   if (foodCount === 0) {
@@ -61,8 +64,8 @@ async function main() {
     const entries = await readJson('entries.json');
     for (const entry of entries) {
       await sql`
-        INSERT INTO entries (id, date, food_id, serving, quantity, calories, protein, carbs, fat)
-        VALUES (${entry.id}, ${entry.date}, ${entry.foodId}, ${entry.serving}, ${entry.quantity}, ${entry.calories}, ${entry.protein}, ${entry.carbs}, ${entry.fat})
+        INSERT INTO entries (id, date, time, food_id, serving, quantity, calories, protein, carbs, fat)
+        VALUES (${entry.id}, ${entry.date}, ${entry.time ?? '12:00'}, ${entry.foodId}, ${entry.serving}, ${entry.quantity}, ${entry.calories}, ${entry.protein}, ${entry.carbs}, ${entry.fat})
         ON CONFLICT (id) DO NOTHING
       `;
     }

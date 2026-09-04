@@ -4,6 +4,7 @@ import { sql } from '@/app/lib/db';
 interface NutritionEntry {
   id: string;
   date: string;
+  time: string;
   foodId: string;
   serving: string;
   quantity: number;
@@ -16,6 +17,7 @@ interface NutritionEntry {
 interface EntryRow {
   id: string;
   date: string;
+  time: string;
   food_id: string;
   serving: string;
   quantity: string;
@@ -29,6 +31,7 @@ function toEntry(row: EntryRow): NutritionEntry {
   return {
     id: row.id,
     date: row.date,
+    time: row.time,
     foodId: row.food_id,
     serving: row.serving,
     quantity: Number(row.quantity),
@@ -54,8 +57,8 @@ export async function POST(request: NextRequest) {
     entry.id = Date.now().toString();
 
     const [row] = (await sql`
-      INSERT INTO entries (id, date, food_id, serving, quantity, calories, protein, carbs, fat)
-      VALUES (${entry.id}, ${entry.date}, ${entry.foodId}, ${entry.serving}, ${entry.quantity}, ${entry.calories}, ${entry.protein}, ${entry.carbs}, ${entry.fat})
+      INSERT INTO entries (id, date, time, food_id, serving, quantity, calories, protein, carbs, fat)
+      VALUES (${entry.id}, ${entry.date}, ${entry.time}, ${entry.foodId}, ${entry.serving}, ${entry.quantity}, ${entry.calories}, ${entry.protein}, ${entry.carbs}, ${entry.fat})
       RETURNING *
     `) as EntryRow[];
 
@@ -77,11 +80,11 @@ export async function DELETE(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const { id, quantity, serving, calories, protein, carbs, fat } = await request.json();
+    const { id, quantity, serving, time, calories, protein, carbs, fat } = await request.json();
 
     const [row] = (await sql`
       UPDATE entries
-      SET quantity = ${quantity}, serving = ${serving}, calories = ${calories}, protein = ${protein}, carbs = ${carbs}, fat = ${fat}
+      SET quantity = ${quantity}, serving = ${serving}, time = ${time}, calories = ${calories}, protein = ${protein}, carbs = ${carbs}, fat = ${fat}
       WHERE id = ${id}
       RETURNING *
     `) as EntryRow[];
