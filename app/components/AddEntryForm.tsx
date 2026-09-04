@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Serving {
   label: string;
@@ -49,6 +49,14 @@ export default function AddEntryForm({
   const [quantity, setQuantity] = useState("1");
   const [submitting, setSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const quantityInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (selectedFood) {
+      quantityInputRef.current?.focus();
+      quantityInputRef.current?.select();
+    }
+  }, [selectedFood]);
 
   if (!isOpen) return null;
 
@@ -168,6 +176,7 @@ export default function AddEntryForm({
                   📊 Quantity
                 </label>
                 <input
+                  ref={quantityInputRef}
                   type="number"
                   min="1"
                   value={quantity}
