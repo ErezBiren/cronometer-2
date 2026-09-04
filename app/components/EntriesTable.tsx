@@ -90,30 +90,30 @@ export default function EntriesTable({
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-3">🍽️</p>
-        <p className="text-gray-500 text-lg">No entries yet. Add your first meal above!</p>
+        <p className="text-gray-400 text-lg">No entries yet. Add your first meal above!</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
       <table className="w-full">
-        <thead className="bg-gray-100 border-b-2 border-gray-200">
+        <thead className="bg-gray-700 border-b-2 border-gray-600">
           <tr>
-            <th className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-700">Food</th>
-            <th className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-700">Time</th>
-            <th colSpan={5} className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-700">
+            <th className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">Food</th>
+            <th className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">Time</th>
+            <th colSpan={5} className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">
               Total: {Math.round(totals.calories)} kcal &middot; {Math.round(totals.protein * 10) / 10}g protein &middot; {Math.round(totals.carbs * 10) / 10}g carbs &middot; {Math.round(totals.fat * 10) / 10}g fat
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-700">
           {entries.map((entry, idx) => {
             const food = getFoodById(entry.foodId);
             return (
             <tr
               key={entry.id}
-              className={`hover:bg-gray-50 transition-colors ${
+              className={`hover:bg-gray-700/60 transition-colors ${
                 animatingId === entry.id ? 'animate-pop' : ''
               }`}
               style={{ animationDelay: `${idx * 50}ms` }}
@@ -127,7 +127,7 @@ export default function EntriesTable({
                       className="size-12 rounded-full object-cover"
                     />
                   )}
-                  <p className="text-xs md:text-base font-semibold text-gray-900">{food?.name}</p>
+                  <p className="text-xs md:text-base font-semibold text-gray-100">{food?.name}</p>
                 </div>
               </td>
               <td className="px-6 py-2 text-left">
@@ -137,12 +137,12 @@ export default function EntriesTable({
                     value={editingTime}
                     onChange={(e) => setEditingTime(e.target.value)}
                     onBlur={() => handleBlur(entry.id)}
-                    className="px-2 py-1 border-2 border-blue-200 rounded text-xs md:text-base font-semibold text-gray-900"
+                    className="px-2 py-1 border-2 border-blue-800 rounded bg-gray-900 text-xs md:text-base font-semibold text-gray-100"
                   />
                 ) : (
                   <span
                     onClick={() => startInlineEdit(entry)}
-                    className="cursor-pointer text-xs md:text-base text-gray-700 hover:text-blue-600 font-semibold"
+                    className="cursor-pointer text-xs md:text-base text-gray-300 hover:text-blue-400 font-semibold"
                   >
                     {entry.time}
                   </span>
@@ -158,13 +158,13 @@ export default function EntriesTable({
                     onBlur={() => handleBlur(entry.id)}
                     onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
                     onFocus={(e) => e.target.select()}
-                    className="w-16 px-2 py-1 border-2 border-blue-200 rounded text-center text-xs md:text-base font-semibold text-gray-900"
+                    className="w-16 px-2 py-1 border-2 border-blue-800 rounded bg-gray-900 text-center text-xs md:text-base font-semibold text-gray-100"
                     autoFocus
                   />
                 ) : (
                   <span
                     onClick={() => startInlineEdit(entry)}
-                    className="cursor-pointer text-xs md:text-base text-gray-700 hover:text-blue-600 font-semibold"
+                    className="cursor-pointer text-xs md:text-base text-gray-300 hover:text-blue-400 font-semibold"
                   >
                     {entry.quantity}
                   </span>
@@ -176,7 +176,7 @@ export default function EntriesTable({
                     value={editingServing}
                     onChange={(e) => setEditingServing(e.target.value)}
                     onBlur={() => handleBlur(entry.id)}
-                    className="px-2 py-1 border-2 border-blue-200 rounded text-xs md:text-base font-semibold text-gray-900"
+                    className="px-2 py-1 border-2 border-blue-800 rounded bg-gray-900 text-xs md:text-base font-semibold text-gray-100"
                   >
                     {(food?.servings || []).map((serving) => (
                       <option key={serving.label} value={serving.label}>
@@ -187,14 +187,14 @@ export default function EntriesTable({
                 ) : (
                   <span
                     onClick={() => startInlineEdit(entry)}
-                    className="cursor-pointer text-xs md:text-base text-gray-700 hover:text-blue-600 font-semibold"
+                    className="cursor-pointer text-xs md:text-base text-gray-300 hover:text-blue-400 font-semibold"
                   >
                     {entry.serving}
                   </span>
                 )}
               </td>
-              <td className="px-6 py-2 text-right text-xs md:text-base text-gray-700">{entry.protein}g</td>
-              <td className="px-6 py-2 text-right text-xs md:text-base font-bold text-gray-900">{entry.calories} kcal</td>
+              <td className="px-6 py-2 text-right text-xs md:text-base text-gray-300">{entry.protein}g</td>
+              <td className="px-6 py-2 text-right text-xs md:text-base font-bold text-gray-100">{entry.calories} kcal</td>
               <td className="px-6 py-2 text-right">
                 <button
                   onClick={() => onDelete(entry.id)}

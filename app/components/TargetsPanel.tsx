@@ -30,12 +30,12 @@ function ProgressBar({
   return (
     <div className="mb-0">
       <div className="flex justify-between items-center mb-0">
-        <p className="font-semibold text-gray-800 text-sm">{label}</p>
-        <p className="text-xs font-bold text-gray-600">
+        <p className="font-semibold text-gray-100 text-sm">{label}</p>
+        <p className="text-xs font-bold text-gray-400">
           {Math.round(percentage)}%
         </p>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+      <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
         <div
           className={`h-full rounded-full transition-all duration-300`}
           style={{
@@ -45,10 +45,10 @@ function ProgressBar({
         />
       </div>
       <div className="flex justify-between mt-0">
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-400">
           {current.toFixed(1)} {unit}
         </p>
-        <p className={`text-xs font-semibold ${isOver ? 'text-red-600' : 'text-gray-500'}`}>
+        <p className={`text-xs font-semibold ${isOver ? 'text-red-400' : 'text-gray-400'}`}>
           {target} {unit}
         </p>
       </div>
@@ -62,15 +62,15 @@ export default function TargetsPanel({
   expenditure,
 }: TargetsPanelProps) {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">🎯 Targets</h2>
+    <div className="bg-gray-800 rounded-xl shadow-lg p-8">
+      <h2 className="text-2xl font-bold text-gray-100 mb-6">🎯 Targets</h2>
       <div className="space-y-2">
         <ProgressBar
           current={consumed.calories}
           target={expenditure}
           label="Energy"
           unit="kcal"
-          color="#4b5563"
+          color="#9ca3af"
         />
         <ProgressBar
           current={consumed.protein}
@@ -84,14 +84,14 @@ export default function TargetsPanel({
           target={targets.carbs}
           label="Net Carbs"
           unit="g"
-          color="#4b5563"
+          color="#9ca3af"
         />
         <ProgressBar
           current={consumed.fat}
           target={targets.fat}
           label="Fat"
           unit="g"
-          color="#4b5563"
+          color="#9ca3af"
         />
       </div>
     </div>

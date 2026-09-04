@@ -119,12 +119,12 @@ export default function AddEntryForm({
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 pointer-events-none">
-      <div className="bg-white rounded-xl shadow-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto pointer-events-auto">
+      <div className="bg-gray-800 rounded-xl shadow-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto pointer-events-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Add Entry</h2>
+          <h2 className="text-2xl font-bold text-gray-100">Add Entry</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+            className="text-gray-400 hover:text-gray-200 text-2xl font-bold"
           >
             ✕
           </button>
@@ -137,28 +137,28 @@ export default function AddEntryForm({
               placeholder="Search food..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900 mb-3"
+              className="w-full px-4 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 font-semibold text-gray-100 mb-3"
             />
 
-            <div className="border-2 border-blue-200 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+            <div className="border-2 border-blue-800 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
               <table className="w-full">
-                <thead className="bg-gray-100 sticky top-0">
+                <thead className="bg-gray-700 sticky top-0">
                   <tr>
-                    <th className="px-4 py-2 text-center text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-2 text-center text-sm font-semibold text-gray-300">
                       Image
                     </th>
-                    <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-2 text-left text-sm font-semibold text-gray-300">
                       Food
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-700">
                   {filteredFoods.map((food) => (
                     <tr
                       key={food.id}
                       onClick={() => handleSelectFood(food)}
-                      className={`hover:bg-blue-50 cursor-pointer transition ${
-                        selectedFood?.id === food.id ? "bg-blue-100" : ""
+                      className={`hover:bg-blue-900/30 cursor-pointer transition ${
+                        selectedFood?.id === food.id ? "bg-blue-900/50" : ""
                       }`}
                     >
                       <td className="px-4 py-3 text-center">
@@ -168,7 +168,7 @@ export default function AddEntryForm({
                           className="w-12 h-12 object-cover rounded"
                         />
                       </td>
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                      <td className="px-4 py-3 text-sm font-medium text-gray-100">
                         {food.name}
                       </td>
                     </tr>
@@ -181,7 +181,7 @@ export default function AddEntryForm({
           {selectedFood && (
             <div className="grid grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   📊 Quantity
                 </label>
                 <input
@@ -191,13 +191,13 @@ export default function AddEntryForm({
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value || "1")}
                   onFocus={(e) => e.target.select()}
-                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-center text-gray-900"
+                  className="w-full px-4 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 font-semibold text-center text-gray-100"
                   disabled={submitting}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   📏 Serving Size
                 </label>
                 <select
@@ -208,7 +208,7 @@ export default function AddEntryForm({
                     );
                     setSelectedServing(serving || null);
                   }}
-                  className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
+                  className="w-full px-4 py-3 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 font-semibold text-gray-100"
                 >
                   {selectedFood.servings.map((serving) => (
                     <option key={serving.label} value={serving.label}>
@@ -219,14 +219,14 @@ export default function AddEntryForm({
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   🕒 Time
                 </label>
                 <input
                   type="time"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
-                  className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-center text-gray-900"
+                  className="w-full px-4 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 font-semibold text-center text-gray-100"
                   disabled={submitting}
                 />
               </div>
@@ -234,10 +234,10 @@ export default function AddEntryForm({
           )}
 
           {selectedFood && selectedServing && (
-            <div className="p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
-              <p className="text-sm font-semibold text-gray-700">
+            <div className="p-4 bg-blue-950/40 border-2 border-blue-800 rounded-lg">
+              <p className="text-sm font-semibold text-gray-300">
                 Protein:{" "}
-                <span className="text-blue-600">
+                <span className="text-blue-400">
                   {Math.round(
                     selectedFood.protein *
                       (selectedServing.grams / 100) *

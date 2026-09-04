@@ -122,36 +122,36 @@ export default function AddFoodPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-900 p-8">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8">
           <button
             onClick={() => router.back()}
-            className="text-blue-600 hover:text-blue-700 font-bold text-lg mb-4"
+            className="text-blue-400 hover:text-blue-300 font-bold text-lg mb-4"
           >
             ← Back
           </button>
-          <h1 className="text-5xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             🍎 Create Food
           </h1>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-gray-800 rounded-xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Food Name</label>
+              <label className="block text-sm font-semibold text-gray-300 mb-2">Food Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., Chicken Breast"
-                className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
+                className="w-full px-4 py-3 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 font-semibold text-gray-100"
                 disabled={submitting}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">📏 Serving Sizes</label>
+              <label className="block text-sm font-semibold text-gray-300 mb-2">📏 Serving Sizes</label>
               <div className="space-y-3 mb-4">
                 {servings.map((serving, index) => (
                   <div key={index} className="flex gap-3">
@@ -160,7 +160,7 @@ export default function AddFoodPage() {
                       value={serving.label}
                       onChange={(e) => updateServing(index, 'label', e.target.value)}
                       placeholder="e.g., 100g, 1 cup"
-                      className="flex-1 px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="flex-1 px-4 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                     <input
@@ -169,7 +169,7 @@ export default function AddFoodPage() {
                       onChange={(e) => updateServing(index, 'grams', e.target.value)}
                       placeholder="grams"
                       min="1"
-                      className="w-32 px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-32 px-4 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                     {servings.length > 1 && (
@@ -188,32 +188,32 @@ export default function AddFoodPage() {
               <button
                 type="button"
                 onClick={addServing}
-                className="w-full px-4 py-2 bg-blue-200 hover:bg-blue-300 text-blue-800 font-semibold rounded-lg transition"
+                className="w-full px-4 py-2 bg-blue-900/40 hover:bg-blue-800/50 text-blue-200 font-semibold rounded-lg transition"
                 disabled={submitting}
               >
                 + Add Serving Size
               </button>
             </div>
 
-            <div className="mt-8 border-2 border-gray-300 rounded-lg p-6 bg-gray-50">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Nutrition Facts</h3>
+            <div className="mt-8 border-2 border-gray-700 rounded-lg p-6 bg-gray-900/50">
+              <h3 className="text-xl font-bold text-gray-100 mb-4">Nutrition Facts</h3>
 
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Calories</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-1">Calories</label>
                     <input
                       type="number"
                       value={nutrition.calories}
                       onChange={(e) => updateNutrition('calories', e.target.value)}
                       placeholder="0"
                       min="0"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Total Fat (g)</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-1">Total Fat (g)</label>
                     <input
                       type="number"
                       value={nutrition.totalFat}
@@ -221,7 +221,7 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
@@ -229,7 +229,7 @@ export default function AddFoodPage() {
 
                 <div className="grid grid-cols-2 gap-4 ml-4 text-sm">
                   <div>
-                    <label className="block font-semibold text-gray-700 mb-1">Saturated Fat (g)</label>
+                    <label className="block font-semibold text-gray-300 mb-1">Saturated Fat (g)</label>
                     <input
                       type="number"
                       value={nutrition.saturatedFat}
@@ -237,12 +237,12 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-gray-700 mb-1">Trans Fat (g)</label>
+                    <label className="block font-semibold text-gray-300 mb-1">Trans Fat (g)</label>
                     <input
                       type="number"
                       value={nutrition.transFat}
@@ -250,7 +250,7 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
@@ -258,26 +258,26 @@ export default function AddFoodPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Cholesterol (mg)</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-1">Cholesterol (mg)</label>
                     <input
                       type="number"
                       value={nutrition.cholesterol}
                       onChange={(e) => updateNutrition('cholesterol', e.target.value)}
                       placeholder="0"
                       min="0"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Sodium (mg)</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-1">Sodium (mg)</label>
                     <input
                       type="number"
                       value={nutrition.sodium}
                       onChange={(e) => updateNutrition('sodium', e.target.value)}
                       placeholder="0"
                       min="0"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
@@ -285,7 +285,7 @@ export default function AddFoodPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Total Carbs (g)</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-1">Total Carbs (g)</label>
                     <input
                       type="number"
                       value={nutrition.totalCarbs}
@@ -293,7 +293,7 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
@@ -301,7 +301,7 @@ export default function AddFoodPage() {
 
                 <div className="grid grid-cols-2 gap-4 ml-4 text-sm">
                   <div>
-                    <label className="block font-semibold text-gray-700 mb-1">Dietary Fiber (g)</label>
+                    <label className="block font-semibold text-gray-300 mb-1">Dietary Fiber (g)</label>
                     <input
                       type="number"
                       value={nutrition.dietaryFiber}
@@ -309,12 +309,12 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-gray-700 mb-1">Total Sugars (g)</label>
+                    <label className="block font-semibold text-gray-300 mb-1">Total Sugars (g)</label>
                     <input
                       type="number"
                       value={nutrition.totalSugars}
@@ -322,7 +322,7 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
@@ -330,7 +330,7 @@ export default function AddFoodPage() {
 
                 <div className="grid grid-cols-2 gap-4 ml-8 text-sm">
                   <div>
-                    <label className="block font-semibold text-gray-700 mb-1">Added Sugars (g)</label>
+                    <label className="block font-semibold text-gray-300 mb-1">Added Sugars (g)</label>
                     <input
                       type="number"
                       value={nutrition.addedSugars}
@@ -338,7 +338,7 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
@@ -346,7 +346,7 @@ export default function AddFoodPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Protein (g)</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-1">Protein (g)</label>
                     <input
                       type="number"
                       value={nutrition.protein}
@@ -354,16 +354,16 @@ export default function AddFoodPage() {
                       placeholder="0"
                       min="0"
                       step="0.1"
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                      className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                       disabled={submitting}
                     />
                   </div>
                 </div>
 
-                <div className="border-t-2 border-gray-300 pt-3 mt-3">
+                <div className="border-t-2 border-gray-700 pt-3 mt-3">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1">Vitamin D (mcg)</label>
+                      <label className="block text-sm font-semibold text-gray-300 mb-1">Vitamin D (mcg)</label>
                       <input
                         type="number"
                         value={nutrition.vitaminD}
@@ -371,19 +371,19 @@ export default function AddFoodPage() {
                         placeholder="0"
                         min="0"
                         step="0.1"
-                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                         disabled={submitting}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1">Calcium (mg)</label>
+                      <label className="block text-sm font-semibold text-gray-300 mb-1">Calcium (mg)</label>
                       <input
                         type="number"
                         value={nutrition.calcium}
                         onChange={(e) => updateNutrition('calcium', e.target.value)}
                         placeholder="0"
                         min="0"
-                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                         disabled={submitting}
                       />
                     </div>
@@ -391,7 +391,7 @@ export default function AddFoodPage() {
 
                   <div className="grid grid-cols-2 gap-4 mt-3">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1">Iron (mg)</label>
+                      <label className="block text-sm font-semibold text-gray-300 mb-1">Iron (mg)</label>
                       <input
                         type="number"
                         value={nutrition.iron}
@@ -399,19 +399,19 @@ export default function AddFoodPage() {
                         placeholder="0"
                         min="0"
                         step="0.1"
-                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                         disabled={submitting}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1">Potassium (mg)</label>
+                      <label className="block text-sm font-semibold text-gray-300 mb-1">Potassium (mg)</label>
                       <input
                         type="number"
                         value={nutrition.potassium}
                         onChange={(e) => updateNutrition('potassium', e.target.value)}
                         placeholder="0"
                         min="0"
-                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                        className="w-full px-3 py-2 border-2 border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                         disabled={submitting}
                       />
                     </div>
@@ -424,7 +424,7 @@ export default function AddFoodPage() {
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="flex-1 px-4 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-lg transition"
+                className="flex-1 px-4 py-3 bg-gray-700 hover:bg-gray-600 text-gray-100 font-bold rounded-lg transition"
                 disabled={submitting}
               >
                 Cancel

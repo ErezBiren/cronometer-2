@@ -93,12 +93,12 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 pointer-events-none">
-      <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full mx-4 pointer-events-auto">
+      <div className="bg-gray-800 rounded-xl shadow-2xl p-8 max-w-md w-full mx-4 pointer-events-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">🍎 Add Food</h2>
+          <h2 className="text-2xl font-bold text-gray-100">🍎 Add Food</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+            className="text-gray-400 hover:text-gray-200 text-2xl font-bold"
           >
             ✕
           </button>
@@ -106,19 +106,19 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Food Name</label>
+            <label className="block text-sm font-semibold text-gray-300 mb-2">Food Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Chicken Breast"
-              className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white font-semibold text-gray-900"
+              className="w-full px-4 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 font-semibold text-gray-100"
               disabled={submitting}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">📏 Serving Sizes</label>
+            <label className="block text-sm font-semibold text-gray-300 mb-2">📏 Serving Sizes</label>
             <div className="space-y-2 mb-2">
               {servings.map((serving, index) => (
                 <div key={index} className="flex gap-2">
@@ -127,7 +127,7 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
                     value={serving.label}
                     onChange={(e) => updateServing(index, 'label', e.target.value)}
                     placeholder="e.g., 100g, 1 cup"
-                    className="flex-1 px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                    className="flex-1 px-3 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                     disabled={submitting}
                   />
                   <input
@@ -136,7 +136,7 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
                     onChange={(e) => updateServing(index, 'grams', e.target.value)}
                     placeholder="grams"
                     min="1"
-                    className="w-24 px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                    className="w-24 px-3 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                     disabled={submitting}
                   />
                   {servings.length > 1 && (
@@ -155,7 +155,7 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
             <button
               type="button"
               onClick={addServing}
-              className="w-full px-3 py-2 bg-blue-200 hover:bg-blue-300 text-blue-800 font-semibold rounded-lg transition"
+              className="w-full px-3 py-2 bg-blue-900/40 hover:bg-blue-800/50 text-blue-200 font-semibold rounded-lg transition"
               disabled={submitting}
             >
               + Add Serving Size
@@ -164,19 +164,19 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Calories</label>
+              <label className="block text-sm font-semibold text-gray-300 mb-2">Calories</label>
               <input
                 type="number"
                 value={calories}
                 onChange={(e) => setCalories(e.target.value)}
                 placeholder="0"
                 min="0"
-                className="w-full px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                className="w-full px-3 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                 disabled={submitting}
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Protein (g)</label>
+              <label className="block text-sm font-semibold text-gray-300 mb-2">Protein (g)</label>
               <input
                 type="number"
                 value={protein}
@@ -184,7 +184,7 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
                 placeholder="0"
                 min="0"
                 step="0.1"
-                className="w-full px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                className="w-full px-3 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                 disabled={submitting}
               />
             </div>
@@ -192,7 +192,7 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Carbs (g)</label>
+              <label className="block text-sm font-semibold text-gray-300 mb-2">Carbs (g)</label>
               <input
                 type="number"
                 value={carbs}
@@ -200,12 +200,12 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
                 placeholder="0"
                 min="0"
                 step="0.1"
-                className="w-full px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                className="w-full px-3 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                 disabled={submitting}
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Fat (g)</label>
+              <label className="block text-sm font-semibold text-gray-300 mb-2">Fat (g)</label>
               <input
                 type="number"
                 value={fat}
@@ -213,7 +213,7 @@ export default function AddFoodModal({ isOpen, onClose, onAdd }: AddFoodModalPro
                 placeholder="0"
                 min="0"
                 step="0.1"
-                className="w-full px-3 py-2 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white text-gray-900"
+                className="w-full px-3 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 text-gray-100"
                 disabled={submitting}
               />
             </div>

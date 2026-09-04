@@ -26,7 +26,7 @@ function CircleIndicator({
           cy="60"
           r="45"
           fill="none"
-          stroke="#e5e7eb"
+          stroke="#374151"
           strokeWidth="8"
         />
         <circle
@@ -48,13 +48,13 @@ function CircleIndicator({
           textAnchor="middle"
           fontSize="24"
           fontWeight="bold"
-          fill="#1f2937"
+          fill="#f3f4f6"
         >
           {value}
         </text>
       </svg>
-      <p className="font-semibold text-gray-700 text-center">{label}</p>
-      <p className="text-sm text-gray-500">{unit}</p>
+      <p className="font-semibold text-gray-300 text-center">{label}</p>
+      <p className="text-sm text-gray-400">{unit}</p>
     </div>
   );
 }
@@ -63,8 +63,8 @@ export default function EnergyCircles({ consumed, expenditure }: EnergyCirclesPr
   const remaining = Math.max(0, expenditure - consumed);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-8">💪 Energy Summary</h2>
+    <div className="bg-gray-800 rounded-xl shadow-lg p-8">
+      <h2 className="text-2xl font-bold text-gray-100 mb-8">💪 Energy Summary</h2>
       <div className="flex justify-around items-end">
         <CircleIndicator
           value={consumed}
