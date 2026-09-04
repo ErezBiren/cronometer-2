@@ -70,7 +70,7 @@ export default function TargetsPanel({
           target={expenditure}
           label="Energy"
           unit="kcal"
-          color="#f97316"
+          color="#4b5563"
         />
         <ProgressBar
           current={consumed.protein}
@@ -84,14 +84,14 @@ export default function TargetsPanel({
           target={targets.carbs}
           label="Net Carbs"
           unit="g"
-          color="#8b5cf6"
+          color="#4b5563"
         />
         <ProgressBar
           current={consumed.fat}
           target={targets.fat}
           label="Fat"
           unit="g"
-          color="#ec4899"
+          color="#4b5563"
         />
       </div>
     </div>
