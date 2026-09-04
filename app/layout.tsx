@@ -58,7 +58,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="min-h-full flex flex-col">
-        <VersionBadge />
+        {/* <VersionBadge /> */}
         <PWAInstaller />
         {children}
       </body>
