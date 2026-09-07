@@ -60,8 +60,10 @@ export default function HomeContent({ initialEntries, initialFoods }: HomeConten
     // Check if we should open the add entry form from query parameter
     if (searchParams.get('openAddEntry') === 'true') {
       setIsFormOpen(true);
+      // Strip the param so the URL doesn't stay "sticky" and block future opens
+      router.replace('/', { scroll: false });
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const handleAddEntry = async (data: {
     date: string;
