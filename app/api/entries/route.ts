@@ -1,51 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/app/lib/db';
-
-interface NutritionEntry {
-  id: string;
-  date: string;
-  time: string;
-  foodId: string;
-  serving: string;
-  quantity: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-}
-
-interface EntryRow {
-  id: string;
-  date: string;
-  time: string;
-  food_id: string;
-  serving: string;
-  quantity: string;
-  calories: string;
-  protein: string;
-  carbs: string;
-  fat: string;
-}
-
-function toEntry(row: EntryRow): NutritionEntry {
-  return {
-    id: row.id,
-    date: row.date,
-    time: row.time,
-    foodId: row.food_id,
-    serving: row.serving,
-    quantity: Number(row.quantity),
-    calories: Number(row.calories),
-    protein: Number(row.protein),
-    carbs: Number(row.carbs),
-    fat: Number(row.fat),
-  };
-}
+import { getEntries, toEntry, type EntryRow } from '@/app/lib/data';
+import type { NutritionEntry } from '@/app/lib/calculations';
 
 export async function GET() {
   try {
-    const rows = (await sql`SELECT * FROM entries ORDER BY date, id`) as EntryRow[];
-    return NextResponse.json(rows.map(toEntry));
+    return NextResponse.json(await getEntries());
   } catch (error) {
     return NextResponse.json({ error: 'Failed to read entries' }, { status: 500 });
   }

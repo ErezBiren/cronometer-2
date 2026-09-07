@@ -1,45 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/app/lib/db';
-
-interface Serving {
-  label: string;
-  grams: number;
-}
-
-interface Food {
-  id: string;
-  name: string;
-  servings: Serving[];
-  image: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-}
-
-interface FoodRow {
-  id: string;
-  name: string;
-  servings: Serving[];
-  image: string;
-  calories: string;
-  protein: string;
-  carbs: string;
-  fat: string;
-}
-
-function toFood(row: FoodRow): Food {
-  return {
-    id: row.id,
-    name: row.name,
-    servings: row.servings,
-    image: row.image,
-    calories: Number(row.calories),
-    protein: Number(row.protein),
-    carbs: Number(row.carbs),
-    fat: Number(row.fat),
-  };
-}
+import { getFoods, toFood, type Food, type FoodRow } from '@/app/lib/data';
 
 async function syncEntriesWithFood(updatedFood: Food) {
   const entries = (await sql`
@@ -66,8 +27,7 @@ async function syncEntriesWithFood(updatedFood: Food) {
 
 export async function GET() {
   try {
-    const rows = (await sql`SELECT * FROM foods ORDER BY name`) as FoodRow[];
-    return NextResponse.json(rows.map(toFood));
+    return NextResponse.json(await getFoods());
   } catch (error) {
     return NextResponse.json({ error: 'Failed to read foods' }, { status: 500 });
   }

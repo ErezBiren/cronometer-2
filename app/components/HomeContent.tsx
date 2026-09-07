@@ -28,17 +28,21 @@ interface Food {
   fat: number;
 }
 
-export default function HomeContent() {
+interface HomeContentProps {
+  initialEntries: NutritionEntry[];
+  initialFoods: Food[];
+}
+
+export default function HomeContent({ initialEntries, initialFoods }: HomeContentProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [entries, setEntries] = useState<NutritionEntry[]>([]);
-  const [foods, setFoods] = useState<Food[]>([]);
+  const [entries, setEntries] = useState<NutritionEntry[]>(initialEntries);
+  const [foods, setFoods] = useState<Food[]>(initialFoods);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const formatSelectedDate = (dateStr: string) => {
     if (dateStr === new Date().toISOString().split('T')[0]) return 'Today';
     return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
-  const [loading, setLoading] = useState(true);
   const [animatingId, setAnimatingId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -51,8 +55,6 @@ export default function HomeContent() {
   const [editFat, setEditFat] = useState('');
 
   useEffect(() => {
-    fetchEntries();
-    fetchFoods();
     setTargets(getStoredTargets());
 
     // Check if we should open the add entry form from query parameter
@@ -60,28 +62,6 @@ export default function HomeContent() {
       setIsFormOpen(true);
     }
   }, [searchParams]);
-
-  const fetchEntries = async () => {
-    try {
-      const res = await fetch('/api/entries');
-      const data = await res.json();
-      setEntries(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error('Failed to fetch entries:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchFoods = async () => {
-    try {
-      const res = await fetch('/api/foods');
-      const data = await res.json();
-      setFoods(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error('Failed to fetch foods:', error);
-    }
-  };
 
   const handleAddEntry = async (data: {
     date: string;
@@ -361,7 +341,7 @@ export default function HomeContent() {
             onDelete={handleDelete}
             onEdit={startEdit}
             onUpdateEntry={handleUpdateEntry}
-            loading={loading}
+            loading={false}
             animatingId={animatingId}
           />
         </div>
