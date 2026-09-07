@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 interface Serving {
   label: string;
@@ -162,11 +163,15 @@ export default function AddEntryForm({
                       }`}
                     >
                       <td className="px-4 py-3 text-center">
-                        <img
-                          src={food.image}
-                          alt={food.name}
-                          className="w-12 h-12 object-cover rounded"
-                        />
+                        <div className="relative w-12 h-12 mx-auto rounded overflow-hidden">
+                          <Image
+                            src={food.image}
+                            alt={food.name}
+                            fill
+                            sizes="48px"
+                            className="object-cover"
+                          />
+                        </div>
                       </td>
                       <td className="px-4 py-3 text-sm font-medium text-gray-100">
                         {food.name}

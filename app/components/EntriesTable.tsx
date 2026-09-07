@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { NutritionEntry } from '@/app/lib/calculations';
 
 interface Serving {
@@ -121,11 +122,15 @@ export default function EntriesTable({
               <td className="px-6 py-2">
                 <div className="flex items-center gap-3">
                   {food?.image && (
-                    <img
-                      src={food.image}
-                      alt={food.name}
-                      className="size-12 rounded-full object-cover"
-                    />
+                    <div className="relative size-12 shrink-0 rounded-full overflow-hidden">
+                      <Image
+                        src={food.image}
+                        alt={food.name}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
+                    </div>
                   )}
                   <p className="text-xs md:text-base font-semibold text-gray-100">{food?.name}</p>
                 </div>

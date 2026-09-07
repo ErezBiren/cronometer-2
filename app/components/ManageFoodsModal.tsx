@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface Serving {
   label: string;
@@ -54,11 +55,15 @@ export default function ManageFoodsModal({ isOpen, onClose, foods, onDelete }: M
                 className="flex items-center justify-between p-4 border-2 border-gray-700 rounded-lg hover:border-blue-800 hover:bg-blue-900/20 transition"
               >
                 <div className="flex items-center gap-4 flex-1">
-                  <img
-                    src={food.image}
-                    alt={food.name}
-                    className="w-12 h-12 object-cover rounded"
-                  />
+                  <div className="relative w-12 h-12 shrink-0 rounded overflow-hidden">
+                    <Image
+                      src={food.image}
+                      alt={food.name}
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  </div>
                   <div>
                     <p className="font-semibold text-gray-100">{food.name}</p>
                     <p className="text-sm text-gray-400">
