@@ -132,7 +132,22 @@ export default function AddEntryForm({
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
+          {selectedFood && (
+            <div className="md:hidden flex items-center justify-between px-4 py-2 bg-blue-950/40 border-2 border-blue-800 rounded-lg">
+              <span className="text-sm font-semibold text-gray-100 truncate">
+                {selectedFood.name}
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedFood(null)}
+                className="text-xs font-semibold text-blue-400 hover:text-blue-300 ml-3 shrink-0"
+              >
+                Change
+              </button>
+            </div>
+          )}
+
+          <div className={selectedFood ? "hidden md:block" : ""}>
             <input
               type="text"
               placeholder="Search food..."
