@@ -9,6 +9,7 @@ interface TargetsPanelProps {
   };
   targets: NutritionTargets;
   expenditure: number;
+  weeklyProtein?: { consumed: number; target: number; diff: number };
 }
 
 function ProgressBar({
@@ -60,6 +61,7 @@ export default function TargetsPanel({
   consumed,
   targets,
   expenditure,
+  weeklyProtein,
 }: TargetsPanelProps) {
   return (
     <div className="bg-gray-800 rounded-xl shadow-lg p-8">
@@ -94,6 +96,19 @@ export default function TargetsPanel({
           color="#9ca3af"
         />
       </div>
+      {weeklyProtein && (
+        <div className="mt-4 pt-4 border-t border-gray-700">
+          <div className="flex justify-between items-center">
+            <p className="font-semibold text-gray-100 text-sm">Protein · last 7 days</p>
+            <p className={`text-sm font-bold ${weeklyProtein.diff >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              {weeklyProtein.diff >= 0 ? '+' : ''}{weeklyProtein.diff.toFixed(1)} g
+            </p>
+          </div>
+          <p className="text-xs text-gray-400">
+            {weeklyProtein.consumed.toFixed(1)} g of {weeklyProtein.target} g target
+          </p>
+        </div>
+      )}
     </div>
   );
 }
