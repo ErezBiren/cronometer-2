@@ -156,7 +156,35 @@ export default function AddEntryForm({
               className="w-full px-4 py-2 border-2 border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-900 font-semibold text-gray-100 mb-3"
             />
 
-            <div className="border-2 border-blue-800 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+            <div className="md:hidden flex flex-wrap gap-2 max-h-[60vh] overflow-y-auto">
+              {filteredFoods.map((food) => (
+                <button
+                  type="button"
+                  key={food.id}
+                  onClick={() => handleSelectFood(food)}
+                  className={`w-[calc((100%-1rem)/3)] flex flex-col items-center gap-1 pb-1 border-2 rounded-lg overflow-hidden transition ${
+                    selectedFood?.id === food.id
+                      ? "border-blue-500 bg-blue-900/50"
+                      : "border-blue-800 hover:bg-blue-900/30"
+                  }`}
+                >
+                  <div className="relative w-full aspect-square overflow-hidden">
+                    <Image
+                      src={food.image}
+                      alt={food.name}
+                      fill
+                      sizes="33vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-100 text-center line-clamp-2">
+                    {food.name}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            <div className="hidden md:block border-2 border-blue-800 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
               <table className="w-full">
                 <thead className="bg-gray-700 sticky top-0">
                   <tr>
