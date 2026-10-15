@@ -44,25 +44,6 @@ export function calculateDailyTotals(entries: NutritionEntry[], date: string): D
   };
 }
 
-export function calculateProteinBalance(
-  entries: NutritionEntry[],
-  endDate: string,
-  dailyTarget: number,
-  days = 7
-): { consumed: number; target: number; diff: number } {
-  const end = new Date(endDate + 'T00:00:00Z');
-  const start = new Date(end);
-  start.setUTCDate(start.getUTCDate() - (days - 1));
-  const startStr = start.toISOString().split('T')[0];
-  const consumed = Math.round(
-    entries
-      .filter(e => e.date >= startStr && e.date <= endDate)
-      .reduce((sum, e) => sum + e.protein, 0) * 10
-  ) / 10;
-  const target = dailyTarget * days;
-  return { consumed, target, diff: Math.round((consumed - target) * 10) / 10 };
-}
-
 export function calculateProgress(current: number, target: number): { percent: number; isOver: boolean } {
   const percent = Math.round((current / target) * 100);
   return {

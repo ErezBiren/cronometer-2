@@ -9,7 +9,7 @@ import NutrientTargets from '@/app/components/NutrientTargets';
 import AddEntryForm from '@/app/components/AddEntryForm';
 import ManageFoodsModal from '@/app/components/ManageFoodsModal';
 import BottomNavbar from '@/app/components/BottomNavbar';
-import { calculateDailyTotals, calculateProteinBalance,getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
+import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
 
 interface Serving {
@@ -330,9 +330,7 @@ export default function HomeContent({ initialEntries, initialFoods }: HomeConten
             <TargetsPanel
               consumed={totals}
               targets={targets}
-              expenditure={DAILY_EXPENDITURE}
-              weeklyProtein={calculateProteinBalance(entries, selectedDate, targets.protein)}
-            />
+              expenditure={DAILY_EXPENDITURE}            />
           </div>
         </div>
 
