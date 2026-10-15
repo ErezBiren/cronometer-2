@@ -49,8 +49,12 @@
     "name": "Eggs, Cooked",
     "servings": [
       {
-        "label": "1 large egg",
-        "grams": 50
+        "label": "Large",
+        "grams": 70
+      },
+      {
+        "label": "X-Large",
+        "grams": 80
       }
     ],
     "image": "/images/eggs.jpg",
