@@ -92,5 +92,20 @@
     "protein": 11,
     "carbs": 1.5,
     "fat": 5
+  },
+  {
+    "id": "protein",
+    "name": "Protein",
+    "servings": [
+      {
+        "label": "g",
+        "grams": 1
+      }
+    ],
+    "image": "/images/protein.avif",
+    "calories": 400,
+    "protein": 100,
+    "carbs": 0,
+    "fat": 0
   }
 ]
