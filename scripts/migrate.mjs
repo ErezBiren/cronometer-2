@@ -44,20 +44,22 @@ async function main() {
 
   await sql`ALTER TABLE entries ADD COLUMN IF NOT EXISTS time TEXT NOT NULL DEFAULT '12:00'`;
 
-  const [{ count: foodCount }] = await sql`SELECT COUNT(*)::int AS count FROM foods`;
-  if (foodCount === 0) {
-    const foods = await readJson('foods.json');
-    for (const food of foods) {
-      await sql`
-        INSERT INTO foods (id, name, servings, image, calories, protein, carbs, fat)
-        VALUES (${food.id}, ${food.name}, ${JSON.stringify(food.servings)}, ${food.image}, ${food.calories}, ${food.protein}, ${food.carbs}, ${food.fat})
-        ON CONFLICT (id) DO NOTHING
-      `;
-    }
-    console.log(`Seeded ${foods.length} foods.`);
-  } else {
-    console.log('foods table already has data, skipping seed.');
+  const foods = await readJson('foods.json');
+  for (const food of foods) {
+    await sql`
+      INSERT INTO foods (id, name, servings, image, calories, protein, carbs, fat)
+      VALUES (${food.id}, ${food.name}, ${JSON.stringify(food.servings)}, ${food.image}, ${food.calories}, ${food.protein}, ${food.carbs}, ${food.fat})
+      ON CONFLICT (id) DO UPDATE SET
+        name = EXCLUDED.name,
+        servings = EXCLUDED.servings,
+        image = EXCLUDED.image,
+        calories = EXCLUDED.calories,
+        protein = EXCLUDED.protein,
+        carbs = EXCLUDED.carbs,
+        fat = EXCLUDED.fat
+    `;
   }
+  console.log(`Synced ${foods.length} foods from foods.json.`);
 
   const [{ count: entryCount }] = await sql`SELECT COUNT(*)::int AS count FROM entries`;
   if (entryCount === 0) {
