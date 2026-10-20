@@ -121,20 +121,20 @@ export default function AddEntryForm({
   return (
     <div className="fixed inset-0 bg-black/60 flex items-start md:items-center justify-center z-50 pointer-events-none">
       <div className="bg-gray-800 rounded-b-xl md:rounded-xl shadow-2xl p-4 md:p-8 max-w-2xl w-full md:mx-4 max-h-dvh md:max-h-[90vh] overflow-y-auto pointer-events-auto">
-        <div className="flex justify-between items-center mb-4 md:mb-6 gap-3">
+        <div className="grid grid-cols-[1fr_auto_1fr] md:flex md:justify-between items-center mb-4 md:mb-6 gap-3">
           <h2 className="text-xl md:text-2xl font-bold text-gray-100">Add Entry</h2>
-          <div className="flex items-center gap-3">
+          <div className="contents">
             <button
               type="submit"
               form="add-entry-form"
               disabled={submitting || !selectedFood}
-              className="md:hidden px-4 py-1.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-bold rounded-lg transition disabled:opacity-50"
+              className="md:hidden min-h-11 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-base font-extrabold rounded-lg shadow-lg transition disabled:opacity-50"
             >
-              {submitting ? "⏳" : "Add ✓"}
+              {submitting ? "⏳" : "Add"}
             </button>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-200 text-2xl font-bold"
+              className="justify-self-end col-start-3 text-gray-400 hover:text-gray-200 text-2xl font-bold"
             >
               ✕
             </button>
