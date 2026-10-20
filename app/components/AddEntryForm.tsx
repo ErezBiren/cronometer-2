@@ -119,19 +119,29 @@ export default function AddEntryForm({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 pointer-events-none">
-      <div className="bg-gray-800 rounded-xl shadow-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto pointer-events-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-100">Add Entry</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-200 text-2xl font-bold"
-          >
-            ✕
-          </button>
+    <div className="fixed inset-0 bg-black/60 flex items-start md:items-center justify-center z-50 pointer-events-none">
+      <div className="bg-gray-800 rounded-b-xl md:rounded-xl shadow-2xl p-4 md:p-8 max-w-2xl w-full md:mx-4 max-h-dvh md:max-h-[90vh] overflow-y-auto pointer-events-auto">
+        <div className="flex justify-between items-center mb-4 md:mb-6 gap-3">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-100">Add Entry</h2>
+          <div className="flex items-center gap-3">
+            <button
+              type="submit"
+              form="add-entry-form"
+              disabled={submitting || !selectedFood}
+              className="md:hidden px-4 py-1.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-bold rounded-lg transition disabled:opacity-50"
+            >
+              {submitting ? "⏳" : "Add ✓"}
+            </button>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-200 text-2xl font-bold"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form id="add-entry-form" onSubmit={handleSubmit} className="space-y-6">
           {selectedFood && (
             <div className="md:hidden flex items-center justify-between px-4 py-2 bg-blue-950/40 border-2 border-blue-800 rounded-lg">
               <span className="text-sm font-semibold text-gray-100 truncate">
@@ -301,7 +311,7 @@ export default function AddEntryForm({
           <button
             type="submit"
             disabled={submitting || !selectedFood}
-            className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition disabled:opacity-50 mt-6"
+            className="hidden md:block w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition disabled:opacity-50 mt-6"
           >
             {submitting ? "⏳ Adding..." : "✨ Add Entry"}
           </button>
