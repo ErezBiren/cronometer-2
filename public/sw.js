@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nutrition-dashboard-v2';
+const CACHE_NAME = 'nutrition-dashboard-v3';
 const OFFLINE_URL = '/offline.html';
 const urlsToCache = [
   OFFLINE_URL,
@@ -38,6 +38,25 @@ self.addEventListener('fetch', event => {
 
   // Never cache API responses
   if (url.pathname.startsWith('/api/')) {
+    return;
+  }
+
+  // Cache-first for immutable build assets (hashed filenames) and icons/images
+  if (url.pathname.startsWith('/_next/static/') || url.pathname.startsWith('/images/') || url.pathname.startsWith('/icon-')) {
+    event.respondWith(
+      caches.match(request).then(cached => {
+        if (cached) {
+          return cached;
+        }
+        return fetch(request).then(response => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, responseToCache));
+          }
+          return response;
+        });
+      })
+    );
     return;
   }
 
