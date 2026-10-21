@@ -1,7 +1,8 @@
-const CACHE_NAME = 'nutrition-dashboard-v1';
+const CACHE_NAME = 'nutrition-dashboard-v2';
+const OFFLINE_URL = '/offline.html';
 const urlsToCache = [
-  '/',
-  '/offline.html'
+  OFFLINE_URL,
+  '/icon-192.png'
 ];
 
 self.addEventListener('install', event => {
@@ -26,46 +27,38 @@ self.addEventListener('activate', event => {
   );
 });
 
+// Network-first: always show fresh data, fall back to cache only when offline.
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  if (request.method !== 'GET') {
+  if (request.method !== 'GET' || url.origin !== location.origin) {
     return;
   }
 
-  if (url.origin !== location.origin) {
+  // Never cache API responses
+  if (url.pathname.startsWith('/api/')) {
     return;
   }
 
   event.respondWith(
-    caches.match(request)
+    fetch(request)
       .then(response => {
-        if (response) {
-          return response;
+        if (response && response.status === 200 && response.type === 'basic') {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, responseToCache));
         }
-
-        return fetch(request)
-          .then(response => {
-            if (!response || response.status !== 200 || response.type === 'error') {
-              return response;
-            }
-
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => cache.put(request, responseToCache));
-
-            return response;
-          })
-          .catch(() => {
-            return new Response('Offline - Page not available', {
-              status: 503,
-              statusText: 'Service Unavailable',
-              headers: new Headers({
-                'Content-Type': 'text/plain'
-              })
-            });
-          });
+        return response;
+      })
+      .catch(async () => {
+        const cached = await caches.match(request);
+        if (cached) {
+          return cached;
+        }
+        if (request.mode === 'navigate') {
+          return caches.match(OFFLINE_URL);
+        }
+        return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
       })
   );
 });
