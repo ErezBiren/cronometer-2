@@ -21,5 +21,8 @@ export default function Home() {
 // waterfall on top of the DB round trip — the main cause of slow mobile loads).
 async function HomeData() {
   const [entries, foods] = await Promise.all([getEntries(), getFoods()]);
-  return <HomeContent initialEntries={entries} initialFoods={foods} />;
+  // Computed once on the server and passed down so the client's first render
+  // matches the server HTML (avoids a hydration mismatch on the date).
+  const today = new Date().toISOString().split('T')[0];
+  return <HomeContent initialEntries={entries} initialFoods={foods} initialToday={today} />;
 }

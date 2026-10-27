@@ -9,6 +9,7 @@ interface TargetsPanelProps {
   };
   targets: NutritionTargets;
   expenditure: number;
+  proteinLastHour: number;
 }
 
 function ProgressBar({
@@ -60,6 +61,7 @@ export default function TargetsPanel({
   consumed,
   targets,
   expenditure,
+  proteinLastHour,
 }: TargetsPanelProps) {
   return (
     <div className="bg-gray-800 rounded-xl shadow-lg p-8">
@@ -79,6 +81,10 @@ export default function TargetsPanel({
           unit="g"
           color="#10b981"
         />
+        <div className="flex justify-between items-center rounded-lg bg-gray-900/60 px-3 py-1.5">
+          <p className="text-xs text-gray-400">⏱️ Protein in last hour</p>
+          <p className="text-sm font-bold text-emerald-400">{proteinLastHour.toFixed(1)} g</p>
+        </div>
         <ProgressBar
           current={consumed.carbs}
           target={targets.carbs}

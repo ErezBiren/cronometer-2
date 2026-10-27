@@ -67,3 +67,11 @@ export function setStoredTargets(targets: NutritionTargets): void {
     localStorage.setItem('nutritionTargets', JSON.stringify(targets));
   }
 }
+
+export function calculateProteinInWindow(entries: NutritionEntry[], now: Date, windowMinutes = 60): number {
+  const windowStart = now.getTime() - windowMinutes * 60 * 1000;
+  return entries.reduce((sum, e) => {
+    const eaten = new Date(`${e.date}T${e.time}`).getTime();
+    return eaten > windowStart && eaten <= now.getTime() ? sum + e.protein : sum;
+  }, 0);
+}

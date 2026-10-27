@@ -9,7 +9,7 @@ import NutrientTargets from '@/app/components/NutrientTargets';
 import AddEntryForm from '@/app/components/AddEntryForm';
 import ManageFoodsModal from '@/app/components/ManageFoodsModal';
 import BottomNavbar from '@/app/components/BottomNavbar';
-import { calculateDailyTotals, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
+import { calculateDailyTotals, calculateProteinInWindow, getStoredTargets, setStoredTargets, DAILY_EXPENDITURE, DEFAULT_TARGETS } from '@/app/lib/calculations';
 import type { NutritionEntry, NutritionTargets } from '@/app/lib/calculations';
 
 interface Serving {
@@ -31,16 +31,25 @@ interface Food {
 interface HomeContentProps {
   initialEntries: NutritionEntry[];
   initialFoods: Food[];
+  initialToday: string;
 }
 
-export default function HomeContent({ initialEntries, initialFoods }: HomeContentProps) {
+export default function HomeContent({ initialEntries, initialFoods, initialToday }: HomeContentProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [entries, setEntries] = useState<NutritionEntry[]>(initialEntries);
   const [foods, setFoods] = useState<Food[]>(initialFoods);
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+
+  // Clock for the "protein in last hour" window; set on mount to avoid hydration mismatch
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => {
+    setNow(new Date());
+    const interval = setInterval(() => setNow(new Date()), 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+  const [selectedDate, setSelectedDate] = useState(initialToday);
   const formatSelectedDate = (dateStr: string) => {
-    if (dateStr === new Date().toISOString().split('T')[0]) return 'Today';
+    if (dateStr === (now ? now.toISOString().split('T')[0] : initialToday)) return 'Today';
     return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
   const [animatingId, setAnimatingId] = useState<string | null>(null);
@@ -199,6 +208,7 @@ export default function HomeContent({ initialEntries, initialFoods }: HomeConten
 
   const todayEntries = entries.filter(e => e.date === selectedDate);
   const totals = calculateDailyTotals(entries, selectedDate);
+  const proteinLastHour = now ? calculateProteinInWindow(entries, now) : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-900 p-8 md:pb-8 pb-28">
@@ -330,7 +340,9 @@ export default function HomeContent({ initialEntries, initialFoods }: HomeConten
             <TargetsPanel
               consumed={totals}
               targets={targets}
-              expenditure={DAILY_EXPENDITURE}            />
+              expenditure={DAILY_EXPENDITURE}
+              proteinLastHour={proteinLastHour}
+            />
           </div>
         </div>
 
