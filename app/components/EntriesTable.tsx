@@ -97,13 +97,14 @@ export default function EntriesTable({
   }
 
   return (
-    <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-      <table className="w-full">
+    <div className="bg-gray-800 rounded-xl shadow-lg overflow-x-auto">
+      <table className="w-full whitespace-nowrap">
         <thead className="bg-gray-700 border-b-2 border-gray-600">
           <tr>
             <th className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">Food</th>
+            <th className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">Protein</th>
             <th className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">Time</th>
-            <th colSpan={5} className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">
+            <th colSpan={4} className="px-6 py-2 text-left text-xs md:text-sm font-semibold text-gray-300">
               Total: {Math.round(totals.calories)} kcal &middot; {Math.round(totals.protein * 10) / 10}g protein &middot; {Math.round(totals.carbs * 10) / 10}g carbs &middot; {Math.round(totals.fat * 10) / 10}g fat
             </th>
           </tr>
@@ -135,6 +136,7 @@ export default function EntriesTable({
                   <p className="text-xs md:text-base font-semibold text-gray-100">{food?.name}</p>
                 </div>
               </td>
+              <td className="px-6 py-2 text-left text-xs md:text-base text-gray-300">{entry.protein}g</td>
               <td className="px-6 py-2 text-left">
                 {editingId === entry.id ? (
                   <input
@@ -198,7 +200,6 @@ export default function EntriesTable({
                   </span>
                 )}
               </td>
-              <td className="px-6 py-2 text-right text-xs md:text-base text-gray-300">{entry.protein}g</td>
               <td className="px-6 py-2 text-right text-xs md:text-base font-bold text-gray-100">{entry.calories} kcal</td>
               <td className="px-6 py-2 text-right">
                 <button
